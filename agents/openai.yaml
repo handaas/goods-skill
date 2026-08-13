@@ -1,0 +1,4 @@
+interface:
+  display_name: "商品大数据报告"
+  short_description: "基于 HandaaS 商品大数据 MCP，生成商品搜索 / 商品画像 / 品牌分析 / 价格分析 / 渠道分析 / 销售趋势的专业 HTML / Markdown / JSON 报告。"
+  default_prompt: "使用 $goods-report 生成「企业名称」的商品大数据报告：按企业名称直查，调用商品 MCP 工具（可选数据源选择器），产出 HTML + Markdown + JSON 三件套。"
