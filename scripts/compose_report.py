@@ -27,10 +27,9 @@ import argparse
 import datetime as dt
 import json
 import pathlib
-import sys
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, Dict, List, Mapping, Optional, Sequence
 
-from common import REPORT_BANNER, REPORT_TYPE, json_dumps, load_json_file, print_json
+from common import REPORT_BANNER, REPORT_TYPE, attach_pagination, call_tool_once, collect_detail_pages, json_dumps, load_json_file, paid_call_scope, print_json
 import mcp_client
 from render_report import render_html, render_markdown, html_to_pdf
 
@@ -38,11 +37,10 @@ SAMPLE_PATH = pathlib.Path(__file__).resolve().parent.parent / "assets" / "repor
 
 # Goods MCP tools.
 T_SEARCH = "goods_search"
-T_PROFILE = "goods_profile"
+T_ENTERPRISE_PRODUCTS = "goods_enterprise_products"
+T_OVERSEAS_PRODUCTS = "goods_overseas_store_products"
 T_BRAND = "goods_brand"
-T_PRICE = "goods_price"
 T_CHANNEL = "goods_channel"
-T_TREND = "goods_trend"
 
 # Default Literal selectors.
 DEFAULT_SEARCH_SOURCE = "retail"
@@ -63,6 +61,8 @@ def _is_api_error(value: Any) -> bool:
     if isinstance(value, str):
         return any(s in value for s in ("接口调用失败", "查询失败", "状态码：4", "状态码：5"))
     if isinstance(value, dict):
+        if value.get("_mcp_error") or value.get("_error") or value.get("isError") is True or value.get("error"):
+            return True
         for v in value.values():
             if isinstance(v, str) and any(s in v for s in ("接口调用失败", "查询失败", "状态码：4", "状态码：5")):
                 return True
@@ -81,7 +81,7 @@ def _first_list(value: Any) -> List[Any]:
             isinstance(value.get(k), list) for k in ("resultList", "list", "items", "data", "productList")
         ):
             return []
-        for key in ("resultList", "list", "items", "data", "productList"):
+        for key in ("resultList", "list", "items", "data", "productList", "eshopList"):
             if isinstance(value.get(key), list):
                 return value[key]
     if value in (None, "", {}):
@@ -93,7 +93,7 @@ def _first_record(value: Any) -> Dict[str, Any]:
     for record in _first_list(value):
         if isinstance(record, dict):
             return record
-    if isinstance(value, dict):
+    if isinstance(value, dict) and not _is_api_error(value):
         return value
     return {}
 
@@ -120,7 +120,7 @@ def _int(value: Any) -> Optional[int]:
 
 def _safe_call(tool: str, arguments: Dict[str, Any]) -> Any:
     try:
-        result = mcp_client.call_tool(tool, arguments)
+        result = call_tool_once(mcp_client.call_tool, tool, arguments)
         if _is_api_error(result):
             return {"_error": "API错误"}
         return result
@@ -137,8 +137,28 @@ def _safe_total(payload: Any) -> Any:
     return None
 
 
+def _channel_total(payload: Any) -> Any:
+    """Channel total key differs by source: domestic uses resultList/total, global uses eshopList/eshopListCount."""
+    if isinstance(payload, dict):
+        for key in ("total", "dataTotal", "eshopListCount"):
+            value = payload.get(key)
+            if value is not None:
+                return value
+    return None
+
+
 def _is_error(payload: Any) -> bool:
     return isinstance(payload, dict) and ("error" in payload or "_error" in payload)
+
+
+def _payload_status(payload: Any) -> str:
+    if _is_api_error(payload):
+        return "error"
+    if isinstance(payload, dict) and str(payload.get("text") or "").strip() == "查询数据为空":
+        return "empty"
+    if _first_list(payload) or (isinstance(payload, dict) and any(v not in (None, "", [], {}) for v in payload.values())):
+        return "success"
+    return "empty"
 
 
 def _join_list(value: Any) -> str:
@@ -195,33 +215,18 @@ def build_metrics(search_total: Any, profile: Mapping[str, Any], channel_total: 
     if channel_total is not None:
         metrics.append({"label": "店铺/渠道数", "value": _text(channel_total), "hint": "电商店铺或网店数量"})
 
-    # Derived ratio deltas where inputs allow.
-    try:
-        st_n = float(search_total) if search_total is not None else None
-        pt_n = float(profile_total) if profile_total is not None else None
-        ct_n = float(channel_total) if channel_total is not None else None
-        if pt_n and st_n and st_n > 0:
-            for m in metrics:
-                if m["label"] == "商品检索结果":
-                    m["delta"] = f"画像覆盖 {pt_n / st_n * 100:.0f}%"
-                    break
-        if pt_n and ct_n and ct_n > 0:
-            for m in metrics:
-                if m["label"] == "店铺/渠道数":
-                    m["delta"] = f"单店均摊商品 {pt_n / ct_n:.0f} 个"
-                    break
-    except (TypeError, ValueError):
-        pass
+    # Totals come from different products and universes. Do not divide search,
+    # enterprise-product, and channel totals without a documented common set.
     return [m for m in metrics if m.get("value") not in ("", None, "-")]
 
 
 def build_caliber(subject: Mapping[str, Any], selectors: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "match_target": subject.get("enterprise") or subject.get("match_raw"),
-        "match_type": f"商品数据按企业主体匹配（keywordType={subject.get('keywordType', 'name')}）；商品搜索/画像/品牌/价格/渠道/趋势通过 source/view/statsMonth 选择上游数据源",
-        "data_scope": "商品搜索明细、商品画像、品牌分析、价格分析、渠道分析、销售趋势",
-        "products": ["商品搜索", "商品画像", "商品品牌分析", "商品价格分析", "商品渠道分析", "商品销售趋势"],
-        "limit": "数据来自电商零售与跨境电商平台；海外数据源 matchKeyword 为海外网店 id；价格/趋势需指定 yyyyMM 统计月份。",
+        "match_type": f"商品数据按企业主体匹配（keywordType={subject.get('keywordType', 'name')}）；商品明细/品牌/渠道通过当前 MCP 已注册工具查询",
+        "data_scope": "企业商品明细、品牌分析、渠道本次采集样本",
+        "products": ["企业商品明细", "商品品牌分析", "商品渠道分析"],
+        "limit": "渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。",
     }
 
 
@@ -251,7 +256,7 @@ def build_core_analysis(
     trend: Any,
     selectors: Mapping[str, Any],
 ) -> Dict[str, Any]:
-    # 商品画像 / 商品明细：goods_profile domestic 返回 {resultList:[{goodsName,
+    # 商品明细：goods_enterprise_products 返回 {resultList:[{goodsName,
     # goodsPrice, goodsSource, goodsImageLink}], total}. goods_search 返回相同字段，
     # 但按企业名查询通常返回"产品不存在"，因此商品明细以 profile 为主、search 为辅。
     profile_total = _safe_total(profile) if isinstance(profile, dict) else None
@@ -292,6 +297,13 @@ def build_core_analysis(
     brand_kv: Dict[str, Any] = {}
     brand_rows: List[Dict[str, Any]] = []
     b = brand if isinstance(brand, dict) and not _is_error(brand) else {}
+    brand_subject = _text(b.get("enterpriseName") or b.get("companyName"))
+    expected_subject = _text(selectors.get("enterprise"))
+    brand_evidence_status = (
+        "verified_subject_relation"
+        if brand_subject and expected_subject and brand_subject.strip() == expected_subject.strip()
+        else "unverified_subject_relation"
+    )
     if b.get("brandsCount") is not None:
         brand_kv["品牌数量"] = _text(b.get("brandsCount"))
     brand_items = b.get("brandsList") or _first_list(brand)
@@ -320,6 +332,8 @@ def build_core_analysis(
     # ecShopUrl, ecShopFoundTime, ecShopProducts}], total}.
     channel_rows: List[Dict[str, Any]] = []
     channel_total = _safe_total(channel) if isinstance(channel, dict) else None
+    if channel_total is None and isinstance(channel, dict):
+        channel_total = channel.get("eshopListCount")
     for item in _first_list(channel):
         if not isinstance(item, dict):
             continue
@@ -350,7 +364,7 @@ def build_core_analysis(
 
     # 品牌分析（bar 优先，无 list 时用 KV）
     if brand_rows:
-        sections.append({"key": "brand_analysis", "title": "品牌分析", "kind": "bar", "note": "企业品牌商品数分布",
+        sections.append({"key": "brand_analysis", "title": "品牌来源线索", "kind": "bar", "note": "上游未返回可核验的企业绑定字段；仅保留来源线索，不作为确定企业品牌",
                          "chart": {"name": "品牌名称", "value": "商品数", "orient": "v"},
                          "columns": [("品牌名称", "品牌名称"), ("商品数", "商品数"), ("主营产品", "主营产品")]})
     elif brand_kv:
@@ -366,7 +380,7 @@ def build_core_analysis(
     # 渠道分析
     if channel_rows:
         sections.append({"key": "channel_analysis", "title": "渠道分析", "kind": "table",
-                         "note": f"数据源 {selectors.get('channel_source') or '-'}；命中 {channel_total if channel_total is not None else len(_first_list(channel))} 条",
+                         "note": f"数据源 {selectors.get('channel_source') or '-'}；上游总数 {channel_total if channel_total is not None else '未知'}，本次采集展示 {len(channel_rows)} 条样本，不代表企业完整渠道",
                          "columns": [("店铺名称", "店铺名称"), ("平台", "平台"), ("开店时间", "开店时间"), ("店铺链接", "店铺链接"), ("在售关键词数", "在售关键词数")]})
 
     # 销售趋势（仅当 --stats-month 提供时有数据）
@@ -379,17 +393,25 @@ def build_core_analysis(
     # 商品明细（profile 主导）
     if goods_rows:
         sections.append({"key": "search_records", "title": "电商商品明细", "kind": "table",
-                         "note": f"企业电商商品 {profile_total if profile_total is not None else '若干'} 条，展示前 {len(brand_rows)} 条",
+                         "note": f"企业电商商品 {profile_total if profile_total is not None else '若干'} 条，本次采集展示 {len(goods_rows)} 条样本",
                          "columns": [("商品名称", "商品名称"), ("价格", "价格"), ("来源", "来源")]})
 
     return {
         "sections": sections,
         "product_profile": profile_kv,
         "brand_analysis": brand_rows if brand_rows else brand_kv,
+        "brand_evidence_status": brand_evidence_status if (brand_rows or brand_kv) else "empty",
         "price_analysis": price_rows,
         "channel_analysis": channel_rows,
         "sales_trend": trend_rows,
         "search_records": goods_rows,
+        "source_status": {
+            "search": _payload_status(search) if selectors.get("search_source") == "overseas" else "not_requested",
+            "enterprise_products": _payload_status(profile),
+            "brand": _payload_status(brand), "channel": _payload_status(channel),
+            "price": "unsupported" if selectors.get("price_source") or selectors.get("stats_month") else "not_requested",
+            "trend": "unsupported" if selectors.get("trend_source") else "not_requested",
+        },
     }
 
 
@@ -436,7 +458,7 @@ def _trend_analysis(rows: List[Mapping[str, Any]], value_key: str = "销售额")
     return {"peak_period": rows[peak_idx].get("周期/月份", "-"), "peak_value": nums[peak_idx], "direction": direction, "yoy": yoy, "last": nums[-1]}
 
 
-def _concentration(rows: List[Mapping[str, Any]], name_key: str, value_key: str, top_n: int = 3) -> Dict[str, Any]:
+def _concentration(rows: Sequence[Mapping[str, Any]], name_key: str, value_key: str, top_n: int = 3) -> Dict[str, Any]:
     """Compute top-N concentration (CRn) and dominant category."""
     items = []
     for r in rows:
@@ -452,7 +474,7 @@ def _concentration(rows: List[Mapping[str, Any]], name_key: str, value_key: str,
     return {"top": items[0][0], "top_share": items[0][1] / total * 100, "cr": cr, "total": total}
 
 
-def _price_stats(rows: List[Mapping[str, Any]]) -> Dict[str, Any]:
+def _price_stats(rows: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
     """Min/max/avg/median of price across rows."""
     prices = []
     for r in rows:
@@ -468,7 +490,7 @@ def _price_stats(rows: List[Mapping[str, Any]]) -> Dict[str, Any]:
     return {"min": prices[0], "max": prices[-1], "avg": sum(prices) / n, "median": median, "count": n}
 
 
-def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List[Mapping[str, Any]]) -> List[Dict[str, Any]]:
+def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
     insights: List[Dict[str, Any]] = []
     metric_map = {m["label"]: str(m["value"]) for m in metrics}
     search_rows = core.get("search_records") or []
@@ -487,7 +509,7 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
         })
 
     # 2. 品牌集中度（CR3 / top share）
-    if brand_rows:
+    if brand_rows and core.get("brand_evidence_status") == "verified_subject_relation":
         conc = _concentration(brand_rows, "品牌名称", "商品数", 3)
         if conc:
             insights.append({
@@ -558,9 +580,9 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
     return insights
 
 
-def build_abstract(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List[Mapping[str, Any]]) -> str:
+def build_abstract(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]]) -> str:
     name = subject.get("enterprise") or subject.get("match_raw") or "目标企业"
-    parts = [f"本报告以“{name}”为分析对象，基于电商零售与跨境电商数据，系统呈现企业商品搜索明细、商品画像、品牌分析、价格分析、渠道分析与销售趋势。"]
+    parts = [f"本报告以“{name}”为分析对象，基于当前 MCP 可用的企业商品、品牌与渠道数据，呈现分页样本和证据边界。"]
     if metrics:
         kv = "、".join(f"{m['label']} {m['value']}" for m in metrics[:5])
         parts.append(f"关键指标包括：{kv}。")
@@ -589,19 +611,20 @@ def build_dry_run_payload(raw: str, keyword_type: str) -> Dict[str, Any]:
 # Assembly
 # --------------------------------------------------------------------------- #
 
-def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List[Mapping[str, Any]], *, dry_run: bool, selectors: Mapping[str, Any]) -> Dict[str, Any]:
+def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]], *, dry_run: bool, selectors: Mapping[str, Any]) -> Dict[str, Any]:
     abstract = build_abstract(subject, core, metrics)
     records = build_records(core)
     insights = build_insights(subject, core, metrics)
-    # Quality gate: count populated core-analysis sections.
+    # Quality gate uses independent evidence dimensions, not only sections that
+    # happened to be appended (which would inflate a one-section report to 100%).
     ca = core if isinstance(core, dict) else {}
-    secs = ca.get("sections", [])
-    if secs:
-        total_secs = len(secs)
-        populated = sum(1 for s in secs if isinstance(s, dict) and ca.get(s.get("key")) not in (None, "", [], {}))
-    else:
-        total_secs = max(1, len([k for k in ca if k != "sections"]))
-        populated = sum(1 for k in ca if k != "sections" and ca.get(k) not in (None, "", [], {}))
+    requested_unsupported = int(bool(selectors.get("price_source") or selectors.get("stats_month"))) + int(bool(selectors.get("trend_source")))
+    total_secs = 3 + requested_unsupported
+    populated = sum((
+        bool(ca.get("product_profile") or ca.get("search_records")),
+        bool(ca.get("brand_analysis")) and ca.get("brand_evidence_status") == "verified_subject_relation",
+        bool(ca.get("channel_analysis")),
+    ))
     quality_report = {
         "total_sections": total_secs,
         "populated_sections": populated,
@@ -630,6 +653,14 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List
             "products": _selected_products(selectors),
             "generated_at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
             "dry_run": dry_run,
+            "unsupported_dimensions": [
+                item for item, requested in (
+                    ("历史价格分析（当前 MCP 未注册对应工具）", selectors.get("price_source") or selectors.get("stats_month")),
+                    ("销售趋势分析（当前 MCP 未注册对应工具）", selectors.get("trend_source")),
+                ) if requested
+            ],
+            "source_status": core.get("source_status", {}),
+            "evidence_status": {"brand_subject_relation": core.get("brand_evidence_status", "empty")},
             "quality_report": quality_report,
         },
     }
@@ -642,13 +673,13 @@ def _selected_products(selectors: Mapping[str, Any]) -> List[Dict[str, str]]:
     if search_source == "overseas":
         products.append({"name": "海外网店搜索", "product_id": "66c9a954268e9d7292c1a9ab"})
     else:
-        products.append({"name": "零售商品搜索", "product_id": "6a609f509d30d4fcc00ccff5"})
+        products.append({"name": "企业零售商品", "product_id": "66c33eff3c0917a9a02feb9d"})
 
     profile_source = selectors.get("profile_source", DEFAULT_PROFILE_SOURCE)
     if profile_source == "overseas":
         products.append({"name": "海外网店商品画像", "product_id": "66d5b7e0537c3f61d646c496"})
     else:
-        products.append({"name": "企业电商商品画像", "product_id": "66c33eff3c0917a9a02feb9d"})
+        products.append({"name": "企业商品明细", "product_id": "66c33eff3c0917a9a02feb9d"})
 
     brand_view = selectors.get("brand_view", DEFAULT_BRAND_VIEW)
     if brand_view == "product_overview":
@@ -656,33 +687,34 @@ def _selected_products(selectors: Mapping[str, Any]) -> List[Dict[str, str]]:
     else:
         products.append({"name": "品牌明细", "product_id": "66c702b725f04ab44cd24d5e"})
 
-    price_source = selectors.get("price_source")
-    if price_source == "enterprise_monthly_sales":
-        products.append({"name": "企业月度销售", "product_id": "684ad781d4819127431fa026"})
-    elif price_source == "store_hot_items":
-        products.append({"name": "店铺热销商品", "product_id": "684ad781d4819127431f9fe1"})
-
     channel_source = selectors.get("channel_source", DEFAULT_CHANNEL_SOURCE)
     if channel_source == "global_store":
         products.append({"name": "国内外网店渠道", "product_id": "672b3125338beb3ec2f5dc43"})
     else:
         products.append({"name": "国内电商店铺渠道", "product_id": "66c702b725f04ab44cd24c83"})
 
-    trend_source = selectors.get("trend_source")
-    if trend_source == "store_monthly":
-        products.append({"name": "店铺月度销售", "product_id": "684ad781d4819127431f9ff8"})
-    elif trend_source == "enterprise_monthly":
-        products.append({"name": "企业月度销售", "product_id": "684ad781d4819127431fa026"})
-    elif trend_source == "enterprise_cumulative":
-        products.append({"name": "企业累计销售", "product_id": "684ad781d4819127431fa016"})
-
     return products
 
 
+@paid_call_scope
 def build_payload(raw: str, keyword_type: str, opts: Mapping[str, Any]) -> Dict[str, Any]:
+    """Build a report using only tools registered by the current goods MCP.
+
+    Historical price/trend selectors are retained for CLI compatibility, but the
+    current server exposes no price/trend tool. They are disclosed as unsupported
+    instead of issuing an unknown-tool call or fabricating a section.
+
+    Paginated detail interfaces (goods_search / goods_overseas_store_products /
+    goods_enterprise_products / goods_channel) are collected within an explicit
+    --max-pages budget (default 1); totals, fetched rows and completeness land in
+    data_source.pagination, and identical paid requests within this run are
+    deduplicated via call_tool_once.
+    """
+    max_pages = opts.get("max_pages", 1)
+    if isinstance(max_pages, bool) or not isinstance(max_pages, int) or max_pages < 1:
+        raise ValueError("max_pages 必须为正整数")
     resolved = resolve_enterprise_name(raw)
     enterprise = resolved["enterprise"]
-
     selectors: Dict[str, Any] = {
         "search_source": opts.get("source") or DEFAULT_SEARCH_SOURCE,
         "profile_source": opts.get("profile_source") or DEFAULT_PROFILE_SOURCE,
@@ -691,95 +723,62 @@ def build_payload(raw: str, keyword_type: str, opts: Mapping[str, Any]) -> Dict[
         "price_source": opts.get("price_source"),
         "trend_source": opts.get("trend_source"),
         "stats_month": opts.get("stats_month"),
+        "enterprise": enterprise,
     }
+    page_size = opts.get("page_size") or 50
 
-    # 1. 商品画像（domestic 用企业名称 + keywordType；overseas 用网店 id）
-    profile_args: Dict[str, Any] = {
-        "matchKeyword": enterprise,
-        "source": selectors["profile_source"],
+    search: Any = {}
+    if selectors["search_source"] == "overseas":
+        search = collect_detail_pages(_safe_call, T_SEARCH, {
+            "matchKeyword": enterprise, "source": "overseas", "pageSize": page_size,
+        }, get_rows=_first_list, get_total=_safe_total, is_error=_is_api_error, max_pages=max_pages)
+
+    # Enterprise-scoped products replace the removed goods_profile tool.
+    profile: Any = {}
+    if selectors["profile_source"] == "overseas":
+        # Overseas product lookup requires a store id; the caller's keyword is
+        # passed verbatim and the report labels this limitation.
+        profile = collect_detail_pages(_safe_call, T_OVERSEAS_PRODUCTS, {
+            "storeId": enterprise, "pageSize": page_size,
+        }, get_rows=_first_list, get_total=_safe_total, is_error=_is_api_error, max_pages=max_pages)
+    else:
+        product_type = "retail" if selectors["search_source"] == "retail" else "ecommerce"
+        profile = collect_detail_pages(_safe_call, T_ENTERPRISE_PRODUCTS, {
+            "matchKeyword": enterprise, "productType": product_type,
+            "keywordType": keyword_type, "pageSize": page_size,
+        }, get_rows=_first_list, get_total=_safe_total, is_error=_is_api_error, max_pages=max_pages)
+
+    brand = _safe_call(T_BRAND, {
+        "matchKeyword": enterprise, "view": selectors["brand_view"],
         "keywordType": keyword_type,
-        "pageIndex": 1,
-        "pageSize": opts.get("page_size") or 50,
-    }
-    profile = _safe_call(T_PROFILE, profile_args)
-
-    # 2. 品牌分析
-    brand_args: Dict[str, Any] = {
-        "matchKeyword": enterprise,
-        "view": selectors["brand_view"],
-        "keywordType": keyword_type,
-    }
-    brand = _safe_call(T_BRAND, brand_args)
-
-    # 3. 渠道分析
-    channel_args: Dict[str, Any] = {
-        "matchKeyword": enterprise,
-        "source": selectors["channel_source"],
-        "keywordType": keyword_type,
-        "pageIndex": 1,
-        "pageSize": opts.get("page_size") or 50,
-    }
-    channel = _safe_call(T_CHANNEL, channel_args)
-    channel_total = _safe_total(channel) if isinstance(channel, dict) else None
-
-    # 4. 商品搜索
-    search_args: Dict[str, Any] = {
-        "matchKeyword": enterprise,
-        "source": selectors["search_source"],
-        "pageIndex": 1,
-    }
-    ps = opts.get("page_size")
-    if ps:
-        search_args["pageSize"] = ps
-    search = _safe_call(T_SEARCH, search_args)
-    search_total = _safe_total(search) if isinstance(search, dict) else None
-
-    # 5. 价格分析（需 stats_month；store_hot_items 需 platform+shopId）
-    price: Any = None
-    stats_month = opts.get("stats_month")
-    if stats_month:
-        price_source = opts.get("price_source") or "store_hot_items"
-        price_args: Dict[str, Any] = {"statsMonth": stats_month, "source": price_source}
-        if price_source == "store_hot_items":
-            if opts.get("platform"):
-                price_args["platform"] = opts.get("platform")
-            if opts.get("shop_id"):
-                price_args["shopId"] = opts.get("shop_id")
-        else:
-            price_args["matchKeyword"] = enterprise
-            price_args["keywordType"] = keyword_type
-        price = _safe_call(T_PRICE, price_args)
-        selectors["price_source"] = price_source
-
-    # 6. 销售趋势（需 stats_month）
-    trend: Any = None
-    if stats_month:
-        trend_source = opts.get("trend_source") or "enterprise_monthly"
-        trend_args: Dict[str, Any] = {"statsMonth": stats_month, "source": trend_source}
-        if trend_source == "store_monthly":
-            if opts.get("platform"):
-                trend_args["platform"] = opts.get("platform")
-            if opts.get("shop_id"):
-                trend_args["shopId"] = opts.get("shop_id")
-        else:
-            trend_args["matchKeyword"] = enterprise
-            trend_args["keywordType"] = keyword_type
-        trend = _safe_call(T_TREND, trend_args)
-        selectors["trend_source"] = trend_source
+    })
+    channel = collect_detail_pages(_safe_call, T_CHANNEL, {
+        "matchKeyword": enterprise, "source": selectors["channel_source"],
+        "keywordType": keyword_type, "pageSize": page_size,
+    }, get_rows=_first_list, get_total=_channel_total, is_error=_is_api_error, max_pages=max_pages)
 
     subject = build_subject(raw, resolved, keyword_type)
-    core = build_core_analysis(search, profile, brand, price, channel, trend, selectors)
+    core = build_core_analysis(search, profile, brand, None, channel, None, selectors)
+    search_total = _safe_total(search) if isinstance(search, dict) else None
+    channel_total = _channel_total(channel) if isinstance(channel, dict) else None
     metrics = build_metrics(search_total, profile if isinstance(profile, dict) else {}, channel_total)
-    _derive_core_metrics(metrics, core if isinstance(core, dict) else {})
-    return _assemble(subject, core, metrics, dry_run=False, selectors=selectors)
-
+    _derive_core_metrics(metrics, core)
+    pagination_sources: Dict[str, Any] = {}
+    if selectors["search_source"] == "overseas":
+        pagination_sources["海外商品检索"] = search
+    if selectors["profile_source"] == "overseas":
+        pagination_sources["海外网店商品"] = profile
+    else:
+        pagination_sources["企业商品明细"] = profile
+    pagination_sources["渠道明细"] = channel
+    return attach_pagination(_assemble(subject, core, metrics, dry_run=False, selectors=selectors), pagination_sources)
 
 def _derive_core_metrics(metrics: List[Dict[str, Any]], core: Mapping[str, Any]) -> List[Dict[str, Any]]:
     """Derive additional metrics from core analysis sections."""
     brand = core.get("brand_analysis", []) if isinstance(core, dict) else []
     channel = core.get("channel_analysis", []) if isinstance(core, dict) else []
     records = core.get("search_records", []) if isinstance(core, dict) else []
-    if isinstance(brand, list) and brand:
+    if isinstance(brand, list) and brand and core.get("brand_evidence_status") == "verified_subject_relation":
         metrics.append({"label": "品牌数量", "value": str(len(brand)), "hint": "涉及品牌总数"})
         try:
             def _cnt(r):
@@ -829,11 +828,15 @@ def main() -> None:
     parser.add_argument("--platform", default=None, help="店铺维度数据源的平台标识（store_hot_items / store_monthly 必填）")
     parser.add_argument("--shop-id", default=None, help="店铺维度数据源的店铺 id（store_hot_items / store_monthly 必填）")
     parser.add_argument("--page-size", type=int, default=None, help="分页大小（最多 50）")
+    parser.add_argument("--max-pages", type=int, default=1, help="明细接口付费分页预算上限（每接口），默认1；先按 total 估算，只有必要且已授权时提高")
     parser.add_argument("--dry-run", action="store_true", help="不调用真实 MCP，使用样例数据组装报告骨架")
     parser.add_argument("--output", help="输出 JSON 路径；省略则打印到 stdout")
     parser.add_argument("--report-output", help="同时输出 HTML 报告（.html）与 Markdown 报告（.md）")
     parser.add_argument("--pdf-output", help="额外输出 PDF 报告（.pdf）；需要 Playwright + Chromium")
     args = parser.parse_args()
+
+    if args.max_pages < 1:
+        raise SystemExit("--max-pages 必须为正整数")
 
     opts = {
         "source": args.source,
@@ -846,6 +849,7 @@ def main() -> None:
         "platform": args.platform,
         "shop_id": args.shop_id,
         "page_size": args.page_size,
+        "max_pages": args.max_pages,
     }
 
     if args.dry_run:
