@@ -17,7 +17,7 @@
         "business-review.json": "ce2d9e13dd5c42b476b8de906ba6e6d6fc06d6c2c918388864e925d34bcb1175",
         "browser-check.json": "8cc1651882e06da24ddfbc3df9d5caa02fbc282294b0b09dddb7d48fee592ef3"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/07-domestic-channel-compare.md"
+      "audit_record": "../test-records/live-replaced-20261027/07-domestic-channel-compare.md"
     },
     {
       "skill": "goods-skill",
@@ -35,7 +35,7 @@
         "business-review.json": "e2017d6f5964b594b8652a399a77b093de2d4ba84b14a31afd9166a6f4644c3a",
         "browser-check.json": "1278dfc9b7836403fc155c100d2de5f703506670f3b6a86850c0e70ee2a5b23b"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/09-domestic-store-trace.md"
+      "audit_record": "../test-records/live-replaced-20261027/09-domestic-store-trace.md"
     },
     {
       "skill": "goods-skill",
@@ -53,7 +53,7 @@
         "business-review.json": "95e2d0584f23a78e994e8804222e391c9f47c76813015b34487ed196a94792e6",
         "browser-check.json": "3d80b035f12680e8d2246443b2215ce641ec86713859ac2c719dc1cb52bb5e01"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/10-global-marketplace-trace.md"
+      "audit_record": "../test-records/live-replaced-20261027/10-global-marketplace-trace.md"
     },
     {
       "skill": "goods-skill",
@@ -71,7 +71,7 @@
         "business-review.json": "9caceadac1735d4c4e6beb9a539681807e53d5feadc080802eb6fea1d7d7c6cb",
         "browser-check.json": "7a676a7f8065174df5873aac58e5fc3b0de2cf861fa84d0b3295b6fc238d851d"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/11-network-product-sample.md"
+      "audit_record": "../test-records/live-replaced-20261027/11-network-product-sample.md"
     }
   ]
 }
