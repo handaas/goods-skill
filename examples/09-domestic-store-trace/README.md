@@ -1,0 +1,47 @@
+# 三只松鼠国内店铺样本追溯
+
+- 用户需求：请列出三只松鼠股份有限公司当前可查的国内电商店铺样本、平台和原始链接，供渠道人员逐条复核；不要判断品牌归属。
+- 决策用途：核验国内店铺记录能否形成可点击的渠道核查清单。
+- 本轮结果：**本轮检查通过**
+- 实际工具调用：3；失败 0
+- 章节覆盖率：67%（不代表证据质量）
+
+## 预期业务检查（不自动宣称通过）
+
+- channel_analysis 至少有一条实际返回记录
+- 至少一条记录同时具备非空店铺名称、平台和店铺链接
+- 店铺链接来自实际返回字段且可与该行店铺对应
+- 企业商品计数如展示必须来自 product_profile，不得替代店铺证据
+- 未验证企业绑定的品牌线索不得用于通过本场景
+
+## 本轮自动检查发现
+
+
+## 使用局限
+
+- 店铺样本不证明官方授权、销量或完整渠道覆盖
+- 开店时间和在售关键词可能缺失
+
+## 证据与复现
+
+- [审计结果](result.json)
+- [工具调用、结果形态与响应摘要哈希](calls.json)
+- [JSON](report.json) / [HTML](report.html) / [Markdown](report.md)
+
+```bash
+python3 goods-skill/scripts/compose_report.py --enterprise '三只松鼠股份有限公司' --channel-source domestic_store --page-size 10 --output goods-skill/output/09-domestic-store-trace/report.json --report-output goods-skill/output/09-domestic-store-trace/report.html
+```
+
+## 逐场景业务复核
+
+本轮真实产物的全部清单检查均有当前字段证据，且报告保留样本/缺失/关系边界。
+
+- **pass** channel_analysis 至少有一条实际返回记录：channel_analysis当前页10/总数12；三只松鼠旗舰店=天猫=https://shop71720200.taobao.com，企业团购官方店=淘宝=https://shop532865770.taobao.com，名称/平台/链接均在同一记录；未用未绑定的小鹿蓝蓝品牌线索替代店铺证据。 当前冻结快照：{"technical_status":"passed","successful_data_calls":3,"calls":[{"tool":"goods_enterprise_products","status":"data","rows":10,"total":12654,"args":{"matchKeyword":"三只松鼠股份有限公司","productType":"retail","keywordType":"name","pageIndex":1,"pageSize":10}},{"tool":"goods_brand","status":"data","rows":null,"total":null,"args":{"matchKeyword":"三只松鼠股份有限公司","view":"brand_detail","keywordType":"name"}},{"tool":"goods_channel","status":"data","rows":10,"total":12,"args":{"matchKeyword":"三只松鼠股份有限公司","source":"domestic_store","keywordType":"name","pageIndex":1,"pageSize":10}}],"subject":{"enterprise":"三只松鼠股份有限公司","matchKeyword":"三只松鼠股份有限公司","keywordType":"name","match_raw":"三只松鼠股份有限公司","resolved":true,"resolve_reason":"视为企业全称"},"metrics":[{"label":"电商商品数","value":"12654","hint":"企业电商商品明细总数"},{"label":"店铺/渠道数","value":"12","hint":"电商店铺或网店数量"},{"label":"覆盖平台","value":"5","hint":"不同电商平台数"}],"core_counts":{"sections":3,"brand_analysis":1,"price_analysis":0,"channel_analysis":10,"sales_trend":0,"search_records":0},"core_samples":{"channel_analysis":[{"店铺名称":"三只松鼠旗舰店","平台":"天猫","开店时间":"-","店铺链接":"https://shop71720200.taobao.com","在售关键词数":"186"},{"店铺名称":"三只松鼠企业团购官方店","平台":"淘宝","开店时间":"2020-08-13","店铺链接":"https://shop532865770.taobao.com","在售关键词数":"189"}]},"quality":{"total_sections":3,"populated_sections":2,"empty_sections":1,"coverage_pct":67},"limit":"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。","html_bytes":1062335,"markdown_bytes":3814}
+- **pass** 至少一条记录同时具备非空店铺名称、平台和店铺链接：channel_analysis当前页10/总数12；三只松鼠旗舰店=天猫=https://shop71720200.taobao.com，企业团购官方店=淘宝=https://shop532865770.taobao.com，名称/平台/链接均在同一记录；未用未绑定的小鹿蓝蓝品牌线索替代店铺证据。 当前冻结快照：{"technical_status":"passed","successful_data_calls":3,"calls":[{"tool":"goods_enterprise_products","status":"data","rows":10,"total":12654,"args":{"matchKeyword":"三只松鼠股份有限公司","productType":"retail","keywordType":"name","pageIndex":1,"pageSize":10}},{"tool":"goods_brand","status":"data","rows":null,"total":null,"args":{"matchKeyword":"三只松鼠股份有限公司","view":"brand_detail","keywordType":"name"}},{"tool":"goods_channel","status":"data","rows":10,"total":12,"args":{"matchKeyword":"三只松鼠股份有限公司","source":"domestic_store","keywordType":"name","pageIndex":1,"pageSize":10}}],"subject":{"enterprise":"三只松鼠股份有限公司","matchKeyword":"三只松鼠股份有限公司","keywordType":"name","match_raw":"三只松鼠股份有限公司","resolved":true,"resolve_reason":"视为企业全称"},"metrics":[{"label":"电商商品数","value":"12654","hint":"企业电商商品明细总数"},{"label":"店铺/渠道数","value":"12","hint":"电商店铺或网店数量"},{"label":"覆盖平台","value":"5","hint":"不同电商平台数"}],"core_counts":{"sections":3,"brand_analysis":1,"price_analysis":0,"channel_analysis":10,"sales_trend":0,"search_records":0},"core_samples":{"channel_analysis":[{"店铺名称":"三只松鼠旗舰店","平台":"天猫","开店时间":"-","店铺链接":"https://shop71720200.taobao.com","在售关键词数":"186"},{"店铺名称":"三只松鼠企业团购官方店","平台":"淘宝","开店时间":"2020-08-13","店铺链接":"https://shop532865770.taobao.com","在售关键词数":"189"}]},"quality":{"total_sections":3,"populated_sections":2,"empty_sections":1,"coverage_pct":67},"limit":"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。","html_bytes":1062335,"markdown_bytes":3814}
+- **pass** 店铺链接来自实际返回字段且可与该行店铺对应：channel_analysis当前页10/总数12；三只松鼠旗舰店=天猫=https://shop71720200.taobao.com，企业团购官方店=淘宝=https://shop532865770.taobao.com，名称/平台/链接均在同一记录；未用未绑定的小鹿蓝蓝品牌线索替代店铺证据。 当前冻结快照：{"technical_status":"passed","successful_data_calls":3,"calls":[{"tool":"goods_enterprise_products","status":"data","rows":10,"total":12654,"args":{"matchKeyword":"三只松鼠股份有限公司","productType":"retail","keywordType":"name","pageIndex":1,"pageSize":10}},{"tool":"goods_brand","status":"data","rows":null,"total":null,"args":{"matchKeyword":"三只松鼠股份有限公司","view":"brand_detail","keywordType":"name"}},{"tool":"goods_channel","status":"data","rows":10,"total":12,"args":{"matchKeyword":"三只松鼠股份有限公司","source":"domestic_store","keywordType":"name","pageIndex":1,"pageSize":10}}],"subject":{"enterprise":"三只松鼠股份有限公司","matchKeyword":"三只松鼠股份有限公司","keywordType":"name","match_raw":"三只松鼠股份有限公司","resolved":true,"resolve_reason":"视为企业全称"},"metrics":[{"label":"电商商品数","value":"12654","hint":"企业电商商品明细总数"},{"label":"店铺/渠道数","value":"12","hint":"电商店铺或网店数量"},{"label":"覆盖平台","value":"5","hint":"不同电商平台数"}],"core_counts":{"sections":3,"brand_analysis":1,"price_analysis":0,"channel_analysis":10,"sales_trend":0,"search_records":0},"core_samples":{"channel_analysis":[{"店铺名称":"三只松鼠旗舰店","平台":"天猫","开店时间":"-","店铺链接":"https://shop71720200.taobao.com","在售关键词数":"186"},{"店铺名称":"三只松鼠企业团购官方店","平台":"淘宝","开店时间":"2020-08-13","店铺链接":"https://shop532865770.taobao.com","在售关键词数":"189"}]},"quality":{"total_sections":3,"populated_sections":2,"empty_sections":1,"coverage_pct":67},"limit":"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。","html_bytes":1062335,"markdown_bytes":3814}
+- **pass** 企业商品计数如展示必须来自 product_profile，不得替代店铺证据：channel_analysis当前页10/总数12；三只松鼠旗舰店=天猫=https://shop71720200.taobao.com，企业团购官方店=淘宝=https://shop532865770.taobao.com，名称/平台/链接均在同一记录；未用未绑定的小鹿蓝蓝品牌线索替代店铺证据。 当前冻结快照：{"technical_status":"passed","successful_data_calls":3,"calls":[{"tool":"goods_enterprise_products","status":"data","rows":10,"total":12654,"args":{"matchKeyword":"三只松鼠股份有限公司","productType":"retail","keywordType":"name","pageIndex":1,"pageSize":10}},{"tool":"goods_brand","status":"data","rows":null,"total":null,"args":{"matchKeyword":"三只松鼠股份有限公司","view":"brand_detail","keywordType":"name"}},{"tool":"goods_channel","status":"data","rows":10,"total":12,"args":{"matchKeyword":"三只松鼠股份有限公司","source":"domestic_store","keywordType":"name","pageIndex":1,"pageSize":10}}],"subject":{"enterprise":"三只松鼠股份有限公司","matchKeyword":"三只松鼠股份有限公司","keywordType":"name","match_raw":"三只松鼠股份有限公司","resolved":true,"resolve_reason":"视为企业全称"},"metrics":[{"label":"电商商品数","value":"12654","hint":"企业电商商品明细总数"},{"label":"店铺/渠道数","value":"12","hint":"电商店铺或网店数量"},{"label":"覆盖平台","value":"5","hint":"不同电商平台数"}],"core_counts":{"sections":3,"brand_analysis":1,"price_analysis":0,"channel_analysis":10,"sales_trend":0,"search_records":0},"core_samples":{"channel_analysis":[{"店铺名称":"三只松鼠旗舰店","平台":"天猫","开店时间":"-","店铺链接":"https://shop71720200.taobao.com","在售关键词数":"186"},{"店铺名称":"三只松鼠企业团购官方店","平台":"淘宝","开店时间":"2020-08-13","店铺链接":"https://shop532865770.taobao.com","在售关键词数":"189"}]},"quality":{"total_sections":3,"populated_sections":2,"empty_sections":1,"coverage_pct":67},"limit":"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。","html_bytes":1062335,"markdown_bytes":3814}
+- **pass** 未验证企业绑定的品牌线索不得用于通过本场景：channel_analysis当前页10/总数12；三只松鼠旗舰店=天猫=https://shop71720200.taobao.com，企业团购官方店=淘宝=https://shop532865770.taobao.com，名称/平台/链接均在同一记录；未用未绑定的小鹿蓝蓝品牌线索替代店铺证据。 当前冻结快照：{"technical_status":"passed","successful_data_calls":3,"calls":[{"tool":"goods_enterprise_products","status":"data","rows":10,"total":12654,"args":{"matchKeyword":"三只松鼠股份有限公司","productType":"retail","keywordType":"name","pageIndex":1,"pageSize":10}},{"tool":"goods_brand","status":"data","rows":null,"total":null,"args":{"matchKeyword":"三只松鼠股份有限公司","view":"brand_detail","keywordType":"name"}},{"tool":"goods_channel","status":"data","rows":10,"total":12,"args":{"matchKeyword":"三只松鼠股份有限公司","source":"domestic_store","keywordType":"name","pageIndex":1,"pageSize":10}}],"subject":{"enterprise":"三只松鼠股份有限公司","matchKeyword":"三只松鼠股份有限公司","keywordType":"name","match_raw":"三只松鼠股份有限公司","resolved":true,"resolve_reason":"视为企业全称"},"metrics":[{"label":"电商商品数","value":"12654","hint":"企业电商商品明细总数"},{"label":"店铺/渠道数","value":"12","hint":"电商店铺或网店数量"},{"label":"覆盖平台","value":"5","hint":"不同电商平台数"}],"core_counts":{"sections":3,"brand_analysis":1,"price_analysis":0,"channel_analysis":10,"sales_trend":0,"search_records":0},"core_samples":{"channel_analysis":[{"店铺名称":"三只松鼠旗舰店","平台":"天猫","开店时间":"-","店铺链接":"https://shop71720200.taobao.com","在售关键词数":"186"},{"店铺名称":"三只松鼠企业团购官方店","平台":"淘宝","开店时间":"2020-08-13","店铺链接":"https://shop532865770.taobao.com","在售关键词数":"189"}]},"quality":{"total_sections":3,"populated_sections":2,"empty_sections":1,"coverage_pct":67},"limit":"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。","html_bytes":1062335,"markdown_bytes":3814}
+
+## 离线浏览器检查
+
+[Ego Lite 离线图表、页面溢出和脚本检查](browser-check.json)

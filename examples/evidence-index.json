@@ -1,0 +1,77 @@
+{
+  "run_id": "live-replaced-20261027",
+  "cases": [
+    {
+      "skill": "goods-skill",
+      "id": "07-domestic-channel-compare",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "5b8a4f9f2b1feb5dc8f0b1225df16425089231cadd8d99dfb144cea41411c042",
+        "report.html": "fc9680bd89d1100b190fa9fd40bab8dfa1c233f96862ff9d9f5feca6ad05ca2e",
+        "report.md": "1c0cc015b8056df404e3c5141bf7cc32d348a906e02d6a72a10038b7db265fe9",
+        "calls.json": "9a22493fcf8cf547c72b78a1707d5dfe117fcce365600ccd2026fef0cfc4f338",
+        "result.json": "9e29e1f4249b44ee753e89aa60c99fb5eccf370c8dd977744c5674a235e4d13e",
+        "audit.json": "a5833b25ce467dc66a9058675ff5f4654b6643605574bc4e41145dbb84a7411e",
+        "acceptance.json": "64d7c8fac94d696bd2e6d3774f6fc05bfd2b3f317c663d0215b9a358034862ec",
+        "business-review.json": "ce2d9e13dd5c42b476b8de906ba6e6d6fc06d6c2c918388864e925d34bcb1175",
+        "browser-check.json": "8cc1651882e06da24ddfbc3df9d5caa02fbc282294b0b09dddb7d48fee592ef3"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/07-domestic-channel-compare.md"
+    },
+    {
+      "skill": "goods-skill",
+      "id": "09-domestic-store-trace",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "d3f6dbe32ea81021334b433a5ff133d7a1253e566639edbe5d9731d2332d7c94",
+        "report.html": "c0d7c9690838220ef741c9021e5b9d31ed7b86f2c278324a6975b481870524e8",
+        "report.md": "c796a895134584cf8c0841c256dcd483f920647b066c3cd6fc0aa13258a5ee1a",
+        "calls.json": "d64fd6221a96e0c712d3575b9a37e3f3e0e461290f7660b6d6d2ad75c843f186",
+        "result.json": "2feb60e8bccf16c3819fb4f4dba1505f24c0230b39eebdeccaa316185ecb1bf3",
+        "audit.json": "90bc7611cee63a6f86861d85e2939e57988fc51d7c3998ef4e528f661c140a59",
+        "acceptance.json": "7e135ca41bf7c06181e73f614ae5bb7f9e247674f8b25312e91d2bd3c0079f13",
+        "business-review.json": "e2017d6f5964b594b8652a399a77b093de2d4ba84b14a31afd9166a6f4644c3a",
+        "browser-check.json": "1278dfc9b7836403fc155c100d2de5f703506670f3b6a86850c0e70ee2a5b23b"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/09-domestic-store-trace.md"
+    },
+    {
+      "skill": "goods-skill",
+      "id": "10-global-marketplace-trace",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "abe66556b185810b4f04333c5059fb3e029a1491458fdf9c821ca17a05a76149",
+        "report.html": "f108ba9ce84ecb5e93d4d2f9418ee1344d7f7d62cf64fdb4a4e0734f0115e417",
+        "report.md": "22208756f18f0d587bcaf73b42b564babcd54abc07f64c1af36459a061281a45",
+        "calls.json": "4e9aa423506ed264877c6287c29d2a1a8e8ed0c36e7c8cf947bfffafcd8552a8",
+        "result.json": "fda43835fa235993fd8ab4e55b03d9b1354045407a84c2c87e387bf8837dda92",
+        "audit.json": "9f70c9991693cc2dbee9b20ad1c2d5269bbed4b057055af38bbe67975e285759",
+        "acceptance.json": "3dca4758dbdff17ca3faa275cb2c9d16c52f9885daabfef018b5f642c95482f4",
+        "business-review.json": "95e2d0584f23a78e994e8804222e391c9f47c76813015b34487ed196a94792e6",
+        "browser-check.json": "3d80b035f12680e8d2246443b2215ce641ec86713859ac2c719dc1cb52bb5e01"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/10-global-marketplace-trace.md"
+    },
+    {
+      "skill": "goods-skill",
+      "id": "11-network-product-sample",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "fe11fbc8e59aae8cfe60f52814a12e3469e710b836eb5460dc8b3f31ead86d9f",
+        "report.html": "f108ba9ce84ecb5e93d4d2f9418ee1344d7f7d62cf64fdb4a4e0734f0115e417",
+        "report.md": "847d27c9747bf0686e1da2b5b3800dbb8ac45f3d6ff6aa57d42e02162b630bcd",
+        "calls.json": "ee1431c3087a8d8fb8cb94c6813da7819e532dcb282343bfc9347636dc8ccdb4",
+        "result.json": "973a31c4743fb40708c880012ccfcc1cf8078453cbcd263f7b078da4a9d971eb",
+        "audit.json": "b5c001bbeab8c0c80dabe8a2a759c11e92b3e2a2e07228cd1d9b66aad9035268",
+        "acceptance.json": "e6f95596d908bf8d97c83da8d111beecca4efab1b9f49b293f2dc4576691b547",
+        "business-review.json": "9caceadac1735d4c4e6beb9a539681807e53d5feadc080802eb6fea1d7d7c6cb",
+        "browser-check.json": "7a676a7f8065174df5873aac58e5fc3b0de2cf861fa84d0b3295b6fc238d851d"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/11-network-product-sample.md"
+    }
+  ]
+}

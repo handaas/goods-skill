@@ -1,0 +1,32 @@
+{
+  "metric_overflows": [],
+  "document_title": "三只松鼠股份有限公司 商品大数据报告",
+  "title_matches": true,
+  "charts": 1,
+  "rendered_charts": 1,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 19
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "c0d7c9690838220ef741c9021e5b9d31ed7b86f2c278324a6975b481870524e8",
+  "report_json_sha256": "d3f6dbe32ea81021334b433a5ff133d7a1253e566639edbe5d9731d2332d7c94",
+  "skill": "goods-skill",
+  "id": "09-domestic-store-trace",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:03:19.981Z"
+}

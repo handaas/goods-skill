@@ -1,0 +1,351 @@
+{
+  "report_type": "goods_analysis",
+  "title": "华为技术有限公司 商品大数据报告",
+  "banner": "商品大数据报告",
+  "subject": {
+    "enterprise": "华为技术有限公司",
+    "matchKeyword": "华为技术有限公司",
+    "keywordType": "name",
+    "match_raw": "华为技术有限公司",
+    "resolved": true,
+    "resolve_reason": "视为企业全称"
+  },
+  "abstract": "本报告以“华为技术有限公司”为分析对象，基于当前 MCP 可用的企业商品、品牌与渠道数据，呈现分页样本和证据边界。关键指标包括：商品检索结果 1、电商商品数 14050、店铺/渠道数 2、覆盖平台 2。报告同时给出商品规模、品牌矩阵与渠道布局的结构化解读，便于选品、竞品、品牌与电商运营决策参考。",
+  "summary": "本报告以“华为技术有限公司”为分析对象，基于当前 MCP 可用的企业商品、品牌与渠道数据，呈现分页样本和证据边界。关键指标包括：商品检索结果 1、电商商品数 14050、店铺/渠道数 2、覆盖平台 2。报告同时给出商品规模、品牌矩阵与渠道布局的结构化解读，便于选品、竞品、品牌与电商运营决策参考。",
+  "executive_summary": [
+    "商品规模反映企业电商业务覆盖广度，是选品与竞品分析的基础。",
+    "渠道覆盖面反映电商触达能力；多平台布局可扩大触达与分散依赖，单一平台占比过高存在渠道集中风险。",
+    "来源分布反映企业电商商品的数据采集渠道；多来源覆盖说明数据较全面。"
+  ],
+  "metrics": [
+    {
+      "label": "商品检索结果",
+      "value": "1",
+      "hint": "本次商品搜索命中数"
+    },
+    {
+      "label": "电商商品数",
+      "value": "14050",
+      "hint": "企业电商商品明细总数"
+    },
+    {
+      "label": "店铺/渠道数",
+      "value": "2",
+      "hint": "电商店铺或网店数量"
+    },
+    {
+      "label": "覆盖平台",
+      "value": "2",
+      "hint": "不同电商平台数"
+    }
+  ],
+  "caliber": {
+    "match_target": "华为技术有限公司",
+    "match_type": "商品数据按企业主体匹配（keywordType=name）；商品明细/品牌/渠道通过当前 MCP 已注册工具查询",
+    "data_scope": "企业商品明细、品牌分析、渠道当前页样本",
+    "products": [
+      "企业商品明细",
+      "商品品牌分析",
+      "商品渠道分析"
+    ],
+    "limit": "渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。"
+  },
+  "core_analysis": {
+    "sections": [
+      {
+        "key": "product_profile",
+        "title": "商品画像",
+        "kind": "kv",
+        "note": "企业电商商品画像概览"
+      },
+      {
+        "key": "brand_analysis",
+        "title": "品牌来源线索",
+        "kind": "bar",
+        "note": "上游未返回可核验的企业绑定字段；仅保留来源线索，不作为确定企业品牌",
+        "chart": {
+          "name": "品牌名称",
+          "value": "商品数",
+          "orient": "v"
+        },
+        "columns": [
+          [
+            "品牌名称",
+            "品牌名称"
+          ],
+          [
+            "商品数",
+            "商品数"
+          ],
+          [
+            "主营产品",
+            "主营产品"
+          ]
+        ]
+      },
+      {
+        "key": "channel_analysis",
+        "title": "渠道分析",
+        "kind": "table",
+        "note": "数据源 global_store；上游总数 2，当前页展示 2 条样本，不代表企业完整渠道",
+        "columns": [
+          [
+            "店铺名称",
+            "店铺名称"
+          ],
+          [
+            "平台",
+            "平台"
+          ],
+          [
+            "开店时间",
+            "开店时间"
+          ],
+          [
+            "店铺链接",
+            "店铺链接"
+          ],
+          [
+            "在售关键词数",
+            "在售关键词数"
+          ]
+        ]
+      },
+      {
+        "key": "search_records",
+        "title": "电商商品明细",
+        "kind": "table",
+        "note": "企业电商商品 14050 条，当前页展示 10 条样本",
+        "columns": [
+          [
+            "商品名称",
+            "商品名称"
+          ],
+          [
+            "价格",
+            "价格"
+          ],
+          [
+            "来源",
+            "来源"
+          ]
+        ]
+      }
+    ],
+    "product_profile": {
+      "电商商品总数": "14050",
+      "样本来源": "commodity"
+    },
+    "brand_analysis": [
+      {
+        "品牌名称": "花粉",
+        "商品数": "2",
+        "主营产品": "面膜、紧致护眼霜"
+      },
+      {
+        "品牌名称": "AMBER",
+        "商品数": "2",
+        "主营产品": "-"
+      },
+      {
+        "品牌名称": "emogo",
+        "商品数": "2",
+        "主营产品": "-"
+      },
+      {
+        "品牌名称": "pura",
+        "商品数": "1",
+        "主营产品": "-"
+      }
+    ],
+    "brand_evidence_status": "unverified_subject_relation",
+    "price_analysis": [],
+    "channel_analysis": [
+      {
+        "店铺名称": "华为技术有限公司",
+        "平台": "cn.made-in-china",
+        "开店时间": "-",
+        "店铺链接": "https://cn.made-in-china.com/showroom/yugan2015-companyinfo.html",
+        "在售关键词数": "-"
+      },
+      {
+        "店铺名称": "Huawei Technologies Co., Ltd",
+        "平台": "tradekey",
+        "开店时间": "-",
+        "店铺链接": "https://www1.tradekey.com/company/Huawei-Technologies-Co-Ltd-7144344.html",
+        "在售关键词数": "-"
+      }
+    ],
+    "sales_trend": [],
+    "search_records": [
+      {
+        "商品名称": "智家通通-OPUniBOX-C11-从FTTR-Wi-Fi7-GPON/GSPON自适应",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "FTTRF50欧盟通用天鹅白OptiXstarV261a-20-智能网关-GPON终端",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "AirEngine8776-X7THP-T",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "B867(1*XGSPON&GPONCombo光模块)",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "AirEngine6776I-X6TH",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "AP772E(11be室外型,2+4双频,内置定向天线,USB,蓝牙)",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "AirEngine5763-11W(11ax室内型,2+2双频,智能天线)",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "AirEngine7070-01-M含3个USBDongle",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "AirEngine8776-X6THP",
+        "价格": "",
+        "来源": "commodity"
+      },
+      {
+        "商品名称": "AirEngine5776-26-T",
+        "价格": "",
+        "来源": "commodity"
+      }
+    ],
+    "source_status": {
+      "search": "success",
+      "enterprise_products": "success",
+      "brand": "success",
+      "channel": "success",
+      "price": "not_requested",
+      "trend": "not_requested"
+    }
+  },
+  "representative_records": [
+    {
+      "商品名称": "智家通通-OPUniBOX-C11-从FTTR-Wi-Fi7-GPON/GSPON自适应",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "FTTRF50欧盟通用天鹅白OptiXstarV261a-20-智能网关-GPON终端",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "AirEngine8776-X7THP-T",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "B867(1*XGSPON&GPONCombo光模块)",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "AirEngine6776I-X6TH",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "AP772E(11be室外型,2+4双频,内置定向天线,USB,蓝牙)",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "AirEngine5763-11W(11ax室内型,2+2双频,智能天线)",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "AirEngine7070-01-M含3个USBDongle",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "AirEngine8776-X6THP",
+      "价格": "-",
+      "来源": "commodity"
+    },
+    {
+      "商品名称": "AirEngine5776-26-T",
+      "价格": "-",
+      "来源": "commodity"
+    }
+  ],
+  "insights": [
+    {
+      "feature": "商品规模",
+      "evidence": "商品数据命中 1 条。",
+      "interpretation": "商品规模反映企业电商业务覆盖广度，是选品与竞品分析的基础。"
+    },
+    {
+      "feature": "渠道布局",
+      "evidence": "覆盖店铺 2 家，分布平台 2 个（cn.made-in-china、tradekey）。",
+      "interpretation": "渠道覆盖面反映电商触达能力；多平台布局可扩大触达与分散依赖，单一平台占比过高存在渠道集中风险。"
+    },
+    {
+      "feature": "来源分布",
+      "evidence": "商品样本覆盖来源 1 个，“commodity”商品数 10，占比约 100%。",
+      "interpretation": "来源分布反映企业电商商品的数据采集渠道；多来源覆盖说明数据较全面。"
+    }
+  ],
+  "data_source": {
+    "mcp_server": "goods-mcp-server",
+    "products": [
+      {
+        "name": "海外网店搜索",
+        "product_id": "66c9a954268e9d7292c1a9ab"
+      },
+      {
+        "name": "企业商品明细",
+        "product_id": "66c33eff3c0917a9a02feb9d"
+      },
+      {
+        "name": "品牌明细",
+        "product_id": "66c702b725f04ab44cd24d5e"
+      },
+      {
+        "name": "国内外网店渠道",
+        "product_id": "672b3125338beb3ec2f5dc43"
+      }
+    ],
+    "generated_at": "2026-10-27T10:45:55+08:00",
+    "dry_run": false,
+    "unsupported_dimensions": [],
+    "source_status": {
+      "search": "success",
+      "enterprise_products": "success",
+      "brand": "success",
+      "channel": "success",
+      "price": "not_requested",
+      "trend": "not_requested"
+    },
+    "evidence_status": {
+      "brand_subject_relation": "unverified_subject_relation"
+    },
+    "quality_report": {
+      "total_sections": 3,
+      "populated_sections": 2,
+      "empty_sections": 1,
+      "coverage_pct": 67
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "metric_overflows": [],
+  "document_title": "小米科技有限责任公司 商品大数据报告",
+  "title_matches": true,
+  "charts": 1,
+  "rendered_charts": 1,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 37
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "fc9680bd89d1100b190fa9fd40bab8dfa1c233f96862ff9d9f5feca6ad05ca2e",
+  "report_json_sha256": "5b8a4f9f2b1feb5dc8f0b1225df16425089231cadd8d99dfb144cea41411c042",
+  "screenshot": "browser.png",
+  "skill": "goods-skill",
+  "id": "07-domestic-channel-compare",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:03:18.598Z"
+}

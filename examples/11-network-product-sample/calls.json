@@ -1,0 +1,152 @@
+[
+  {
+    "tool": "goods_search",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "华为技术有限公司",
+      "source": "overseas",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793069151915040000",
+    "elapsed_seconds": 1.48,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "total",
+      "resultList"
+    ],
+    "row_count": 1,
+    "reported_total": 1,
+    "numeric_evidence": [
+      {
+        "path": "total",
+        "value": 1
+      },
+      {
+        "path": "resultList[0].eshopAvgBSR",
+        "value": 0
+      },
+      {
+        "path": "resultList[0].operationStatus",
+        "value": 1
+      },
+      {
+        "path": "resultList[0].productCount",
+        "value": 1000
+      }
+    ],
+    "response_sha256": "b6edf6e76f0e93b523085a6cc5c6ed2d97ab54d37f429f4ea438433797755b2c"
+  },
+  {
+    "tool": "goods_enterprise_products",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "华为技术有限公司",
+      "productType": "ecommerce",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793069151915040000",
+    "elapsed_seconds": 0.992,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "total",
+      "resultList"
+    ],
+    "row_count": 10,
+    "reported_total": 14050,
+    "numeric_evidence": [
+      {
+        "path": "total",
+        "value": 14050
+      }
+    ],
+    "response_sha256": "dcae10b08034f43a057960aa6e49ac0635d709ac52501123533aa914076f96e7"
+  },
+  {
+    "tool": "goods_brand",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "华为技术有限公司",
+      "view": "brand_detail",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793069151915040000",
+    "elapsed_seconds": 0.263,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "brandsList",
+      "brandsCount"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "brandsList[0].productCount",
+        "value": 2
+      },
+      {
+        "path": "brandsList[1].productCount",
+        "value": 2
+      },
+      {
+        "path": "brandsList[2].productCount",
+        "value": 2
+      },
+      {
+        "path": "brandsList[3].productCount",
+        "value": 1
+      },
+      {
+        "path": "brandsCount",
+        "value": 4
+      }
+    ],
+    "response_sha256": "cc295d1aff9ace7c8740a73e09c810dc5aed468dca3b63c764071f04a73bf44d"
+  },
+  {
+    "tool": "goods_channel",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "华为技术有限公司",
+      "source": "global_store",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793069151915040000",
+    "elapsed_seconds": 0.286,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "eshopList",
+      "eshopListCount",
+      "overview"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "eshopListCount",
+        "value": 2
+      },
+      {
+        "path": "overview.domesticEshopCount",
+        "value": 1
+      },
+      {
+        "path": "overview.foreignEshopCount",
+        "value": 1
+      }
+    ],
+    "response_sha256": "346a62ad667f663820c3888b6164b877f32d2a0d412df0e0d3dc88c7afa8aed8"
+  }
+]

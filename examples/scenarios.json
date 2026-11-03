@@ -1,0 +1,114 @@
+{
+  "skill": "goods-skill",
+  "kind": "verified_positive_examples",
+  "run_id": "live-replaced-20261027",
+  "source_manifest": "../test-records/scenarios-20261027.json",
+  "scenarios": [
+    {
+      "id": "07-domestic-channel-compare",
+      "title": "国内电商渠道结构分析",
+      "user_request": "分析小米科技有限责任公司的国内电商店铺渠道结构，供渠道团队检查平台集中度。",
+      "purpose": "发现平台和店铺分布的集中风险。",
+      "args": [
+        "--enterprise",
+        "小米科技有限责任公司",
+        "--channel-source",
+        "domestic_store",
+        "--profile-source",
+        "domestic",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "国内店铺和商品画像口径一致",
+        "渠道集中度有记录数量支撑",
+        "同名店铺不被无依据合并",
+        "报告不把检索样本外推为全渠道份额"
+      ],
+      "limitations": [
+        "仅覆盖数据源可见店铺",
+        "无法仅凭名称确认全部店铺授权关系"
+      ]
+    },
+    {
+      "id": "09-domestic-store-trace",
+      "title": "三只松鼠国内店铺样本追溯",
+      "user_request": "请列出三只松鼠股份有限公司当前可查的国内电商店铺样本、平台和原始链接，供渠道人员逐条复核；不要判断品牌归属。",
+      "purpose": "核验国内店铺记录能否形成可点击的渠道核查清单。",
+      "args": [
+        "--enterprise",
+        "三只松鼠股份有限公司",
+        "--channel-source",
+        "domestic_store",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "channel_analysis 至少有一条实际返回记录",
+        "至少一条记录同时具备非空店铺名称、平台和店铺链接",
+        "店铺链接来自实际返回字段且可与该行店铺对应",
+        "企业商品计数如展示必须来自 product_profile，不得替代店铺证据",
+        "未验证企业绑定的品牌线索不得用于通过本场景"
+      ],
+      "limitations": [
+        "店铺样本不证明官方授权、销量或完整渠道覆盖",
+        "开店时间和在售关键词可能缺失"
+      ]
+    },
+    {
+      "id": "10-global-marketplace-trace",
+      "title": "华为全球平台记录核查",
+      "user_request": "请核查华为技术有限公司当前返回的全球网店记录，逐条列出原始店铺名称、平台和链接；不要推断国家覆盖或官方授权。",
+      "purpose": "为跨境渠道研究提供可回溯的平台记录清单。",
+      "args": [
+        "--enterprise",
+        "华为技术有限公司",
+        "--source",
+        "overseas",
+        "--channel-source",
+        "global_store",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "channel_analysis 至少有一条实际返回记录",
+        "每条计入结论的记录必须同时具备非空店铺名称、平台和店铺链接",
+        "平台结论必须来自记录的平台字段而非请求参数",
+        "不得用商品总数或海外 source 参数替代全球网店记录证据",
+        "记录不得被改写为直营网店或授权店"
+      ],
+      "limitations": [
+        "记录不提供可复核地区时不得声称国家或地区覆盖",
+        "平台收录不证明店铺授权或经营关系"
+      ]
+    },
+    {
+      "id": "11-network-product-sample",
+      "title": "华为网络设备商品命名样本",
+      "user_request": "请抽取华为技术有限公司海外商品检索当前页的具体商品名称，用于建立网络设备命名词表；不分析价格、销量、趋势或渠道覆盖。",
+      "purpose": "从实际商品名称形成产品命名样本，供分类词表维护。",
+      "args": [
+        "--enterprise",
+        "华为技术有限公司",
+        "--source",
+        "overseas",
+        "--channel-source",
+        "global_store",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "search_records 至少有两条实际返回记录",
+        "至少两条记录的 商品名称 非空且彼此不同，并且名称文本本身可识别为网络或通信设备（例如包含网关、终端、AirEngine、FTTR、OptiXstar、AP 等设备词）",
+        "计入词表的名称必须来自 search_records[].商品名称 而不是企业名或请求参数",
+        "search_records[].来源 如存在应保留原值",
+        "不得以商品总数替代具体网络/通信设备商品名称证据"
+      ],
+      "limitations": [
+        "商品样本不是完整产品目录",
+        "价格为空时不得生成价格带",
+        "商品名称不证明销量或品牌归属"
+      ]
+    }
+  ]
+}

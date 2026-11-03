@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "skill": "goods-skill",
+  "case_id": "07-domestic-channel-compare",
+  "title": "国内电商渠道结构分析",
+  "invocation_id": "1793069139833491000",
+  "provenance": {
+    "integrator_id": "683e574805537ace146cc05e",
+    "runner_sha256": "05777c2f2b0791cb5157aef691206606dade8df7af3b17212285b7ae74632a66",
+    "credential_policy_sha256": "bcabf08a1ca92f28357c0e57a8bae9bfa910eb1d4b204d8195ee3b7a77106eed",
+    "scenario_sha256": "14548452174434c2fc0d675781cd86462a57dc38ccfdf5db509db88c18596f99",
+    "skill_source_hashes": {
+      "scripts/common.py": "a50fad2d3e4418cbfd4f5fb418a796820447981091572400a9a92cb503f98188",
+      "scripts/compose_report.py": "24c04f88602e2a36464111ffd1bf9bd288d975125940f6fd17899afe8a7b9e48",
+      "scripts/mcp_client.py": "bbf4eb7a5db40e3ee2a559deb162a022aff1a813e668c5f234362fc6090dd0bd",
+      "scripts/render_report.py": "898abcd5e2bcb19d8d7720b8cd85087f9d7384481a8121b7ec0beda31e828ceb",
+      "scripts/validate_config.py": "adb08fa11708f80dbfddfc903749f6a898c15081adefdfe2f8c14fc6324bbdb3"
+    },
+    "upstream_source_hashes": {
+      "goods-mcp-server": "c1c38487173514fd37335397a7263f02fb6378ddb995136f8c625e9e318fc435"
+    },
+    "upstream_dependency_hashes": {
+      "goods-mcp-server/server/mcp_server.py": "c1c38487173514fd37335397a7263f02fb6378ddb995136f8c625e9e318fc435"
+    }
+  },
+  "source_changed_during_run": false,
+  "started_at": "2026-10-27T10:45:39+08:00",
+  "elapsed_seconds": 11.917,
+  "returncode": 0,
+  "exception_type": null,
+  "command": "python3 goods-skill/scripts/compose_report.py --enterprise '小米科技有限责任公司' --channel-source domestic_store --profile-source domestic --page-size 10 --output goods-skill/output/live-replaced-20261027/07-domestic-channel-compare/report.json --report-output goods-skill/output/live-replaced-20261027/07-domestic-channel-compare/report.html",
+  "transport": "local MCP servers via loopback streamable-http",
+  "cache_used": false,
+  "call_count": 3,
+  "successful_data_calls": 3,
+  "empty_calls": 0,
+  "failed_calls": 0,
+  "checks": {
+    "issues": [],
+    "warnings": [],
+    "coverage_pct": 67,
+    "subject": {
+      "enterprise": "小米科技有限责任公司",
+      "matchKeyword": "小米科技有限责任公司",
+      "keywordType": "name",
+      "match_raw": "小米科技有限责任公司",
+      "resolved": true,
+      "resolve_reason": "视为企业全称"
+    },
+    "title": "小米科技有限责任公司 商品大数据报告",
+    "data_mode": null,
+    "metrics": [
+      {
+        "label": "电商商品数",
+        "value": "1836",
+        "hint": "企业电商商品明细总数"
+      },
+      {
+        "label": "店铺/渠道数",
+        "value": "1",
+        "hint": "电商店铺或网店数量"
+      },
+      {
+        "label": "覆盖平台",
+        "value": "1",
+        "hint": "不同电商平台数"
+      }
+    ],
+    "quality_report": {
+      "total_sections": 3,
+      "populated_sections": 2,
+      "empty_sections": 1,
+      "coverage_pct": 67
+    },
+    "unregistered_tools": [],
+    "checks": {
+      "json_html_markdown": true,
+      "explicit_live": true,
+      "tool_calls_recorded": 3,
+      "offline_scripts": true,
+      "independent_rerender": true,
+      "offline_browser": true
+    }
+  },
+  "status": "passed",
+  "source_hashes": {
+    "scripts/common.py": "a50fad2d3e4418cbfd4f5fb418a796820447981091572400a9a92cb503f98188",
+    "scripts/compose_report.py": "24c04f88602e2a36464111ffd1bf9bd288d975125940f6fd17899afe8a7b9e48",
+    "scripts/mcp_client.py": "bbf4eb7a5db40e3ee2a559deb162a022aff1a813e668c5f234362fc6090dd0bd",
+    "scripts/render_report.py": "898abcd5e2bcb19d8d7720b8cd85087f9d7384481a8121b7ec0beda31e828ceb",
+    "scripts/validate_config.py": "adb08fa11708f80dbfddfc903749f6a898c15081adefdfe2f8c14fc6324bbdb3"
+  },
+  "technical_status": "passed",
+  "audited_at": "2026-10-27T11:13:01+08:00",
+  "evidence_binding": {
+    "report.json": "5b8a4f9f2b1feb5dc8f0b1225df16425089231cadd8d99dfb144cea41411c042",
+    "report.html": "fc9680bd89d1100b190fa9fd40bab8dfa1c233f96862ff9d9f5feca6ad05ca2e",
+    "report.md": "1c0cc015b8056df404e3c5141bf7cc32d348a906e02d6a72a10038b7db265fe9",
+    "calls.json": "9a22493fcf8cf547c72b78a1707d5dfe117fcce365600ccd2026fef0cfc4f338",
+    "result.json": "9e29e1f4249b44ee753e89aa60c99fb5eccf370c8dd977744c5674a235e4d13e",
+    "source_manifest_sha256": "014e0c39ccd221d4b037bfafc75dc705b73521da54c003be18fa8ca62d4dab92"
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "skill": "goods-skill",
+  "case_id": "11-network-product-sample",
+  "title": "华为网络设备商品命名样本",
+  "invocation_id": "1793069151915040000",
+  "provenance": {
+    "integrator_id": "683e574805537ace146cc05e",
+    "runner_sha256": "05777c2f2b0791cb5157aef691206606dade8df7af3b17212285b7ae74632a66",
+    "credential_policy_sha256": "bcabf08a1ca92f28357c0e57a8bae9bfa910eb1d4b204d8195ee3b7a77106eed",
+    "scenario_sha256": "11fa45f1c0965dede66642a67d006f24f2b045bc11da84195063e7e9f3b3ce99",
+    "skill_source_hashes": {
+      "scripts/common.py": "a50fad2d3e4418cbfd4f5fb418a796820447981091572400a9a92cb503f98188",
+      "scripts/compose_report.py": "24c04f88602e2a36464111ffd1bf9bd288d975125940f6fd17899afe8a7b9e48",
+      "scripts/mcp_client.py": "bbf4eb7a5db40e3ee2a559deb162a022aff1a813e668c5f234362fc6090dd0bd",
+      "scripts/render_report.py": "898abcd5e2bcb19d8d7720b8cd85087f9d7384481a8121b7ec0beda31e828ceb",
+      "scripts/validate_config.py": "adb08fa11708f80dbfddfc903749f6a898c15081adefdfe2f8c14fc6324bbdb3"
+    },
+    "upstream_source_hashes": {
+      "goods-mcp-server": "c1c38487173514fd37335397a7263f02fb6378ddb995136f8c625e9e318fc435"
+    },
+    "upstream_dependency_hashes": {
+      "goods-mcp-server/server/mcp_server.py": "c1c38487173514fd37335397a7263f02fb6378ddb995136f8c625e9e318fc435"
+    }
+  },
+  "source_changed_during_run": false,
+  "started_at": "2026-10-27T10:45:51+08:00",
+  "elapsed_seconds": 3.108,
+  "returncode": 0,
+  "exception_type": null,
+  "command": "python3 goods-skill/scripts/compose_report.py --enterprise '华为技术有限公司' --source overseas --channel-source global_store --page-size 10 --output goods-skill/output/live-replaced-20261027/11-network-product-sample/report.json --report-output goods-skill/output/live-replaced-20261027/11-network-product-sample/report.html",
+  "transport": "local MCP servers via loopback streamable-http",
+  "cache_used": false,
+  "call_count": 4,
+  "successful_data_calls": 4,
+  "empty_calls": 0,
+  "failed_calls": 0,
+  "checks": {
+    "issues": [],
+    "warnings": [],
+    "coverage_pct": 67,
+    "subject": {
+      "enterprise": "华为技术有限公司",
+      "matchKeyword": "华为技术有限公司",
+      "keywordType": "name",
+      "match_raw": "华为技术有限公司",
+      "resolved": true,
+      "resolve_reason": "视为企业全称"
+    },
+    "title": "华为技术有限公司 商品大数据报告",
+    "data_mode": null,
+    "metrics": [
+      {
+        "label": "商品检索结果",
+        "value": "1",
+        "hint": "本次商品搜索命中数"
+      },
+      {
+        "label": "电商商品数",
+        "value": "14050",
+        "hint": "企业电商商品明细总数"
+      },
+      {
+        "label": "店铺/渠道数",
+        "value": "2",
+        "hint": "电商店铺或网店数量"
+      },
+      {
+        "label": "覆盖平台",
+        "value": "2",
+        "hint": "不同电商平台数"
+      }
+    ],
+    "quality_report": {
+      "total_sections": 3,
+      "populated_sections": 2,
+      "empty_sections": 1,
+      "coverage_pct": 67
+    },
+    "unregistered_tools": [],
+    "checks": {
+      "json_html_markdown": true,
+      "explicit_live": true,
+      "tool_calls_recorded": 4,
+      "offline_scripts": true,
+      "independent_rerender": true,
+      "offline_browser": true
+    }
+  },
+  "status": "passed",
+  "source_hashes": {
+    "scripts/common.py": "a50fad2d3e4418cbfd4f5fb418a796820447981091572400a9a92cb503f98188",
+    "scripts/compose_report.py": "24c04f88602e2a36464111ffd1bf9bd288d975125940f6fd17899afe8a7b9e48",
+    "scripts/mcp_client.py": "bbf4eb7a5db40e3ee2a559deb162a022aff1a813e668c5f234362fc6090dd0bd",
+    "scripts/render_report.py": "898abcd5e2bcb19d8d7720b8cd85087f9d7384481a8121b7ec0beda31e828ceb",
+    "scripts/validate_config.py": "adb08fa11708f80dbfddfc903749f6a898c15081adefdfe2f8c14fc6324bbdb3"
+  },
+  "technical_status": "passed",
+  "audited_at": "2026-10-27T11:13:01+08:00",
+  "evidence_binding": {
+    "report.json": "fe11fbc8e59aae8cfe60f52814a12e3469e710b836eb5460dc8b3f31ead86d9f",
+    "report.html": "f108ba9ce84ecb5e93d4d2f9418ee1344d7f7d62cf64fdb4a4e0734f0115e417",
+    "report.md": "847d27c9747bf0686e1da2b5b3800dbb8ac45f3d6ff6aa57d42e02162b630bcd",
+    "calls.json": "ee1431c3087a8d8fb8cb94c6813da7819e532dcb282343bfc9347636dc8ccdb4",
+    "result.json": "973a31c4743fb40708c880012ccfcc1cf8078453cbcd263f7b078da4a9d971eb",
+    "source_manifest_sha256": "014e0c39ccd221d4b037bfafc75dc705b73521da54c003be18fa8ca62d4dab92"
+  },
+  "business_review": {
+    "id": "11-network-product-sample",
+    "verdict": "acceptable",
+    "summary": "本轮真实产物的全部清单检查均有当前字段证据，且报告保留样本/缺失/关系边界。",
+    "checks": [
+      {
+        "expectation": "search_records 至少有两条实际返回记录",
+        "status": "pass",
+        "evidence": "search_records实际展示10条企业商品样本；其中‘FTTRF50…OptiXstar…智能网关-GPON终端’和‘AirEngine8776-X7THP-T’等名称非空且不同，设备词直接出现在商品名称；来源字段保留commodity。 当前冻结快照：{\"technical_status\":\"passed\",\"successful_data_calls\":4,\"calls\":[{\"tool\":\"goods_search\",\"status\":\"data\",\"rows\":1,\"total\":1,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"overseas\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_enterprise_products\",\"status\":\"data\",\"rows\":10,\"total\":14050,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"productType\":\"ecommerce\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_brand\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"view\":\"brand_detail\",\"keywordType\":\"name\"}},{\"tool\":\"goods_channel\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"global_store\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}}],\"subject\":{\"enterprise\":\"华为技术有限公司\",\"matchKeyword\":\"华为技术有限公司\",\"keywordType\":\"name\",\"match_raw\":\"华为技术有限公司\",\"resolved\":true,\"resolve_reason\":\"视为企业全称\"},\"metrics\":[{\"label\":\"商品检索结果\",\"value\":\"1\",\"hint\":\"本次商品搜索命中数\"},{\"label\":\"电商商品数\",\"value\":\"14050\",\"hint\":\"企业电商商品明细总数\"},{\"label\":\"店铺/渠道数\",\"value\":\"2\",\"hint\":\"电商店铺或网店数量\"},{\"label\":\"覆盖平台\",\"value\":\"2\",\"hint\":\"不同电商平台数\"}],\"core_counts\":{\"sections\":4,\"brand_analysis\":4,\"price_analysis\":0,\"channel_analysis\":2,\"sales_trend\":0,\"search_records\":10},\"core_samples\":{\"search_records\":[{\"商品名称\":\"智家通通-OPUniBOX-C11-从FTTR-Wi-Fi7-GPON/GSPON自适应\",\"价格\":\"\",\"来源\":\"commodity\"},{\"商品名称\":\"FTTRF50欧盟通用天鹅白OptiXstarV261a-20-智能网关-GPON终端\",\"价格\":\"\",\"来源\":\"commodity\"}],\"channel_analysis\":[{\"店铺名称\":\"华为技术有限公司\",\"平台\":\"cn.made-in-china\",\"开店时间\":\"-\",\"店铺链接\":\"https://cn.made-in-china.com/showroom/yugan2015-companyinfo.html\",\"在售关键词数\":\"-\"},{\"店铺名称\":\"Huawei Technologies Co., Ltd\",\"平台\":\"tradekey\",\"开店时间\":\"-\",\"店铺链接\":\"https://www1.tradekey.com/company/Huawei-Technologies-Co-Ltd-7144344.html\",\"在售关键词数\":\"-\"}]},\"quality\":{\"total_sections\":3,\"populated_sections\":2,\"empty_sections\":1,\"coverage_pct\":67},\"limit\":\"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。\",\"html_bytes\":1062993,\"markdown_bytes\":4214}"
+      },
+      {
+        "expectation": "至少两条记录的 商品名称 非空且彼此不同，并且名称文本本身可识别为网络或通信设备（例如包含网关、终端、AirEngine、FTTR、OptiXstar、AP 等设备词）",
+        "status": "pass",
+        "evidence": "search_records实际展示10条企业商品样本；其中‘FTTRF50…OptiXstar…智能网关-GPON终端’和‘AirEngine8776-X7THP-T’等名称非空且不同，设备词直接出现在商品名称；来源字段保留commodity。 当前冻结快照：{\"technical_status\":\"passed\",\"successful_data_calls\":4,\"calls\":[{\"tool\":\"goods_search\",\"status\":\"data\",\"rows\":1,\"total\":1,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"overseas\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_enterprise_products\",\"status\":\"data\",\"rows\":10,\"total\":14050,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"productType\":\"ecommerce\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_brand\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"view\":\"brand_detail\",\"keywordType\":\"name\"}},{\"tool\":\"goods_channel\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"global_store\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}}],\"subject\":{\"enterprise\":\"华为技术有限公司\",\"matchKeyword\":\"华为技术有限公司\",\"keywordType\":\"name\",\"match_raw\":\"华为技术有限公司\",\"resolved\":true,\"resolve_reason\":\"视为企业全称\"},\"metrics\":[{\"label\":\"商品检索结果\",\"value\":\"1\",\"hint\":\"本次商品搜索命中数\"},{\"label\":\"电商商品数\",\"value\":\"14050\",\"hint\":\"企业电商商品明细总数\"},{\"label\":\"店铺/渠道数\",\"value\":\"2\",\"hint\":\"电商店铺或网店数量\"},{\"label\":\"覆盖平台\",\"value\":\"2\",\"hint\":\"不同电商平台数\"}],\"core_counts\":{\"sections\":4,\"brand_analysis\":4,\"price_analysis\":0,\"channel_analysis\":2,\"sales_trend\":0,\"search_records\":10},\"core_samples\":{\"search_records\":[{\"商品名称\":\"智家通通-OPUniBOX-C11-从FTTR-Wi-Fi7-GPON/GSPON自适应\",\"价格\":\"\",\"来源\":\"commodity\"},{\"商品名称\":\"FTTRF50欧盟通用天鹅白OptiXstarV261a-20-智能网关-GPON终端\",\"价格\":\"\",\"来源\":\"commodity\"}],\"channel_analysis\":[{\"店铺名称\":\"华为技术有限公司\",\"平台\":\"cn.made-in-china\",\"开店时间\":\"-\",\"店铺链接\":\"https://cn.made-in-china.com/showroom/yugan2015-companyinfo.html\",\"在售关键词数\":\"-\"},{\"店铺名称\":\"Huawei Technologies Co., Ltd\",\"平台\":\"tradekey\",\"开店时间\":\"-\",\"店铺链接\":\"https://www1.tradekey.com/company/Huawei-Technologies-Co-Ltd-7144344.html\",\"在售关键词数\":\"-\"}]},\"quality\":{\"total_sections\":3,\"populated_sections\":2,\"empty_sections\":1,\"coverage_pct\":67},\"limit\":\"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。\",\"html_bytes\":1062993,\"markdown_bytes\":4214}"
+      },
+      {
+        "expectation": "计入词表的名称必须来自 search_records[].商品名称 而不是企业名或请求参数",
+        "status": "pass",
+        "evidence": "search_records实际展示10条企业商品样本；其中‘FTTRF50…OptiXstar…智能网关-GPON终端’和‘AirEngine8776-X7THP-T’等名称非空且不同，设备词直接出现在商品名称；来源字段保留commodity。 当前冻结快照：{\"technical_status\":\"passed\",\"successful_data_calls\":4,\"calls\":[{\"tool\":\"goods_search\",\"status\":\"data\",\"rows\":1,\"total\":1,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"overseas\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_enterprise_products\",\"status\":\"data\",\"rows\":10,\"total\":14050,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"productType\":\"ecommerce\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_brand\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"view\":\"brand_detail\",\"keywordType\":\"name\"}},{\"tool\":\"goods_channel\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"global_store\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}}],\"subject\":{\"enterprise\":\"华为技术有限公司\",\"matchKeyword\":\"华为技术有限公司\",\"keywordType\":\"name\",\"match_raw\":\"华为技术有限公司\",\"resolved\":true,\"resolve_reason\":\"视为企业全称\"},\"metrics\":[{\"label\":\"商品检索结果\",\"value\":\"1\",\"hint\":\"本次商品搜索命中数\"},{\"label\":\"电商商品数\",\"value\":\"14050\",\"hint\":\"企业电商商品明细总数\"},{\"label\":\"店铺/渠道数\",\"value\":\"2\",\"hint\":\"电商店铺或网店数量\"},{\"label\":\"覆盖平台\",\"value\":\"2\",\"hint\":\"不同电商平台数\"}],\"core_counts\":{\"sections\":4,\"brand_analysis\":4,\"price_analysis\":0,\"channel_analysis\":2,\"sales_trend\":0,\"search_records\":10},\"core_samples\":{\"search_records\":[{\"商品名称\":\"智家通通-OPUniBOX-C11-从FTTR-Wi-Fi7-GPON/GSPON自适应\",\"价格\":\"\",\"来源\":\"commodity\"},{\"商品名称\":\"FTTRF50欧盟通用天鹅白OptiXstarV261a-20-智能网关-GPON终端\",\"价格\":\"\",\"来源\":\"commodity\"}],\"channel_analysis\":[{\"店铺名称\":\"华为技术有限公司\",\"平台\":\"cn.made-in-china\",\"开店时间\":\"-\",\"店铺链接\":\"https://cn.made-in-china.com/showroom/yugan2015-companyinfo.html\",\"在售关键词数\":\"-\"},{\"店铺名称\":\"Huawei Technologies Co., Ltd\",\"平台\":\"tradekey\",\"开店时间\":\"-\",\"店铺链接\":\"https://www1.tradekey.com/company/Huawei-Technologies-Co-Ltd-7144344.html\",\"在售关键词数\":\"-\"}]},\"quality\":{\"total_sections\":3,\"populated_sections\":2,\"empty_sections\":1,\"coverage_pct\":67},\"limit\":\"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。\",\"html_bytes\":1062993,\"markdown_bytes\":4214}"
+      },
+      {
+        "expectation": "search_records[].来源 如存在应保留原值",
+        "status": "pass",
+        "evidence": "search_records实际展示10条企业商品样本；其中‘FTTRF50…OptiXstar…智能网关-GPON终端’和‘AirEngine8776-X7THP-T’等名称非空且不同，设备词直接出现在商品名称；来源字段保留commodity。 当前冻结快照：{\"technical_status\":\"passed\",\"successful_data_calls\":4,\"calls\":[{\"tool\":\"goods_search\",\"status\":\"data\",\"rows\":1,\"total\":1,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"overseas\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_enterprise_products\",\"status\":\"data\",\"rows\":10,\"total\":14050,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"productType\":\"ecommerce\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_brand\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"view\":\"brand_detail\",\"keywordType\":\"name\"}},{\"tool\":\"goods_channel\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"global_store\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}}],\"subject\":{\"enterprise\":\"华为技术有限公司\",\"matchKeyword\":\"华为技术有限公司\",\"keywordType\":\"name\",\"match_raw\":\"华为技术有限公司\",\"resolved\":true,\"resolve_reason\":\"视为企业全称\"},\"metrics\":[{\"label\":\"商品检索结果\",\"value\":\"1\",\"hint\":\"本次商品搜索命中数\"},{\"label\":\"电商商品数\",\"value\":\"14050\",\"hint\":\"企业电商商品明细总数\"},{\"label\":\"店铺/渠道数\",\"value\":\"2\",\"hint\":\"电商店铺或网店数量\"},{\"label\":\"覆盖平台\",\"value\":\"2\",\"hint\":\"不同电商平台数\"}],\"core_counts\":{\"sections\":4,\"brand_analysis\":4,\"price_analysis\":0,\"channel_analysis\":2,\"sales_trend\":0,\"search_records\":10},\"core_samples\":{\"search_records\":[{\"商品名称\":\"智家通通-OPUniBOX-C11-从FTTR-Wi-Fi7-GPON/GSPON自适应\",\"价格\":\"\",\"来源\":\"commodity\"},{\"商品名称\":\"FTTRF50欧盟通用天鹅白OptiXstarV261a-20-智能网关-GPON终端\",\"价格\":\"\",\"来源\":\"commodity\"}],\"channel_analysis\":[{\"店铺名称\":\"华为技术有限公司\",\"平台\":\"cn.made-in-china\",\"开店时间\":\"-\",\"店铺链接\":\"https://cn.made-in-china.com/showroom/yugan2015-companyinfo.html\",\"在售关键词数\":\"-\"},{\"店铺名称\":\"Huawei Technologies Co., Ltd\",\"平台\":\"tradekey\",\"开店时间\":\"-\",\"店铺链接\":\"https://www1.tradekey.com/company/Huawei-Technologies-Co-Ltd-7144344.html\",\"在售关键词数\":\"-\"}]},\"quality\":{\"total_sections\":3,\"populated_sections\":2,\"empty_sections\":1,\"coverage_pct\":67},\"limit\":\"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。\",\"html_bytes\":1062993,\"markdown_bytes\":4214}"
+      },
+      {
+        "expectation": "不得以商品总数替代具体网络/通信设备商品名称证据",
+        "status": "pass",
+        "evidence": "search_records实际展示10条企业商品样本；其中‘FTTRF50…OptiXstar…智能网关-GPON终端’和‘AirEngine8776-X7THP-T’等名称非空且不同，设备词直接出现在商品名称；来源字段保留commodity。 当前冻结快照：{\"technical_status\":\"passed\",\"successful_data_calls\":4,\"calls\":[{\"tool\":\"goods_search\",\"status\":\"data\",\"rows\":1,\"total\":1,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"overseas\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_enterprise_products\",\"status\":\"data\",\"rows\":10,\"total\":14050,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"productType\":\"ecommerce\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}},{\"tool\":\"goods_brand\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"view\":\"brand_detail\",\"keywordType\":\"name\"}},{\"tool\":\"goods_channel\",\"status\":\"data\",\"rows\":null,\"total\":null,\"args\":{\"matchKeyword\":\"华为技术有限公司\",\"source\":\"global_store\",\"keywordType\":\"name\",\"pageIndex\":1,\"pageSize\":10}}],\"subject\":{\"enterprise\":\"华为技术有限公司\",\"matchKeyword\":\"华为技术有限公司\",\"keywordType\":\"name\",\"match_raw\":\"华为技术有限公司\",\"resolved\":true,\"resolve_reason\":\"视为企业全称\"},\"metrics\":[{\"label\":\"商品检索结果\",\"value\":\"1\",\"hint\":\"本次商品搜索命中数\"},{\"label\":\"电商商品数\",\"value\":\"14050\",\"hint\":\"企业电商商品明细总数\"},{\"label\":\"店铺/渠道数\",\"value\":\"2\",\"hint\":\"电商店铺或网店数量\"},{\"label\":\"覆盖平台\",\"value\":\"2\",\"hint\":\"不同电商平台数\"}],\"core_counts\":{\"sections\":4,\"brand_analysis\":4,\"price_analysis\":0,\"channel_analysis\":2,\"sales_trend\":0,\"search_records\":10},\"core_samples\":{\"search_records\":[{\"商品名称\":\"智家通通-OPUniBOX-C11-从FTTR-Wi-Fi7-GPON/GSPON自适应\",\"价格\":\"\",\"来源\":\"commodity\"},{\"商品名称\":\"FTTRF50欧盟通用天鹅白OptiXstarV261a-20-智能网关-GPON终端\",\"价格\":\"\",\"来源\":\"commodity\"}],\"channel_analysis\":[{\"店铺名称\":\"华为技术有限公司\",\"平台\":\"cn.made-in-china\",\"开店时间\":\"-\",\"店铺链接\":\"https://cn.made-in-china.com/showroom/yugan2015-companyinfo.html\",\"在售关键词数\":\"-\"},{\"店铺名称\":\"Huawei Technologies Co., Ltd\",\"平台\":\"tradekey\",\"开店时间\":\"-\",\"店铺链接\":\"https://www1.tradekey.com/company/Huawei-Technologies-Co-Ltd-7144344.html\",\"在售关键词数\":\"-\"}]},\"quality\":{\"total_sections\":3,\"populated_sections\":2,\"empty_sections\":1,\"coverage_pct\":67},\"limit\":\"渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。\",\"html_bytes\":1062993,\"markdown_bytes\":4214}"
+      }
+    ],
+    "issues": [],
+    "evidence_binding": {
+      "report.json": "fe11fbc8e59aae8cfe60f52814a12e3469e710b836eb5460dc8b3f31ead86d9f",
+      "report.html": "f108ba9ce84ecb5e93d4d2f9418ee1344d7f7d62cf64fdb4a4e0734f0115e417",
+      "report.md": "847d27c9747bf0686e1da2b5b3800dbb8ac45f3d6ff6aa57d42e02162b630bcd",
+      "calls.json": "ee1431c3087a8d8fb8cb94c6813da7819e532dcb282343bfc9347636dc8ccdb4",
+      "result.json": "973a31c4743fb40708c880012ccfcc1cf8078453cbcd263f7b078da4a9d971eb",
+      "source_manifest_sha256": "014e0c39ccd221d4b037bfafc75dc705b73521da54c003be18fa8ca62d4dab92"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "tool": "goods_enterprise_products",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "小米科技有限责任公司",
+      "productType": "retail",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793069139833491000",
+    "elapsed_seconds": 8.402,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "total",
+      "resultList"
+    ],
+    "row_count": 10,
+    "reported_total": 1836,
+    "numeric_evidence": [
+      {
+        "path": "total",
+        "value": 1836
+      }
+    ],
+    "response_sha256": "1c4e9275da03f821619cf7c9b8997dc94ef4e56b817cb0ca7d9674913ea92c1a"
+  },
+  {
+    "tool": "goods_brand",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "小米科技有限责任公司",
+      "view": "brand_detail",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793069139833491000",
+    "elapsed_seconds": 1.894,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "brandsList",
+      "brandsCount"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "brandsList[0].productCount",
+        "value": 18
+      },
+      {
+        "path": "brandsList[1].productCount",
+        "value": 5
+      },
+      {
+        "path": "brandsList[2].productCount",
+        "value": 2
+      },
+      {
+        "path": "brandsList[3].productCount",
+        "value": 2
+      },
+      {
+        "path": "brandsList[4].productCount",
+        "value": 1
+      },
+      {
+        "path": "brandsCount",
+        "value": 5
+      }
+    ],
+    "response_sha256": "994aeb8479045d6cb93994540916ea1ffbb4f315bf391acc50fc468abc522975"
+  },
+  {
+    "tool": "goods_channel",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "小米科技有限责任公司",
+      "source": "domestic_store",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793069139833491000",
+    "elapsed_seconds": 1.529,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 1,
+    "reported_total": 1,
+    "numeric_evidence": [
+      {
+        "path": "total",
+        "value": 1
+      }
+    ],
+    "response_sha256": "dc858a9bd873a95fc2b268a37adcf7fab92cfa1bb95b30285b312992294dcc77"
+  }
+]

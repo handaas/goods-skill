@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "skill": "goods-skill",
+  "case_id": "10-global-marketplace-trace",
+  "title": "华为全球平台记录核查",
+  "invocation_id": "1793069150358928000",
+  "provenance": {
+    "integrator_id": "683e574805537ace146cc05e",
+    "runner_sha256": "05777c2f2b0791cb5157aef691206606dade8df7af3b17212285b7ae74632a66",
+    "credential_policy_sha256": "bcabf08a1ca92f28357c0e57a8bae9bfa910eb1d4b204d8195ee3b7a77106eed",
+    "scenario_sha256": "202a57e75502dafaec2850001155b232430607610ba3f5838a57459a2e621b81",
+    "skill_source_hashes": {
+      "scripts/common.py": "a50fad2d3e4418cbfd4f5fb418a796820447981091572400a9a92cb503f98188",
+      "scripts/compose_report.py": "24c04f88602e2a36464111ffd1bf9bd288d975125940f6fd17899afe8a7b9e48",
+      "scripts/mcp_client.py": "bbf4eb7a5db40e3ee2a559deb162a022aff1a813e668c5f234362fc6090dd0bd",
+      "scripts/render_report.py": "898abcd5e2bcb19d8d7720b8cd85087f9d7384481a8121b7ec0beda31e828ceb",
+      "scripts/validate_config.py": "adb08fa11708f80dbfddfc903749f6a898c15081adefdfe2f8c14fc6324bbdb3"
+    },
+    "upstream_source_hashes": {
+      "goods-mcp-server": "c1c38487173514fd37335397a7263f02fb6378ddb995136f8c625e9e318fc435"
+    },
+    "upstream_dependency_hashes": {
+      "goods-mcp-server/server/mcp_server.py": "c1c38487173514fd37335397a7263f02fb6378ddb995136f8c625e9e318fc435"
+    }
+  },
+  "source_changed_during_run": false,
+  "started_at": "2026-10-27T10:45:50+08:00",
+  "elapsed_seconds": 4.131,
+  "returncode": 0,
+  "exception_type": null,
+  "command": "python3 goods-skill/scripts/compose_report.py --enterprise '华为技术有限公司' --source overseas --channel-source global_store --page-size 10 --output goods-skill/output/live-replaced-20261027/10-global-marketplace-trace/report.json --report-output goods-skill/output/live-replaced-20261027/10-global-marketplace-trace/report.html",
+  "transport": "local MCP servers via loopback streamable-http",
+  "cache_used": false,
+  "call_count": 4,
+  "successful_data_calls": 4,
+  "empty_calls": 0,
+  "failed_calls": 0,
+  "checks": {
+    "issues": [],
+    "warnings": [],
+    "coverage_pct": 67,
+    "subject": {
+      "enterprise": "华为技术有限公司",
+      "matchKeyword": "华为技术有限公司",
+      "keywordType": "name",
+      "match_raw": "华为技术有限公司",
+      "resolved": true,
+      "resolve_reason": "视为企业全称"
+    },
+    "title": "华为技术有限公司 商品大数据报告",
+    "data_mode": null,
+    "metrics": [
+      {
+        "label": "商品检索结果",
+        "value": "1",
+        "hint": "本次商品搜索命中数"
+      },
+      {
+        "label": "电商商品数",
+        "value": "14050",
+        "hint": "企业电商商品明细总数"
+      },
+      {
+        "label": "店铺/渠道数",
+        "value": "2",
+        "hint": "电商店铺或网店数量"
+      },
+      {
+        "label": "覆盖平台",
+        "value": "2",
+        "hint": "不同电商平台数"
+      }
+    ],
+    "quality_report": {
+      "total_sections": 3,
+      "populated_sections": 2,
+      "empty_sections": 1,
+      "coverage_pct": 67
+    },
+    "unregistered_tools": [],
+    "checks": {
+      "json_html_markdown": true,
+      "explicit_live": true,
+      "tool_calls_recorded": 4,
+      "offline_scripts": true,
+      "independent_rerender": true
+    }
+  },
+  "status": "passed",
+  "source_hashes": {
+    "scripts/common.py": "a50fad2d3e4418cbfd4f5fb418a796820447981091572400a9a92cb503f98188",
+    "scripts/compose_report.py": "24c04f88602e2a36464111ffd1bf9bd288d975125940f6fd17899afe8a7b9e48",
+    "scripts/mcp_client.py": "bbf4eb7a5db40e3ee2a559deb162a022aff1a813e668c5f234362fc6090dd0bd",
+    "scripts/render_report.py": "898abcd5e2bcb19d8d7720b8cd85087f9d7384481a8121b7ec0beda31e828ceb",
+    "scripts/validate_config.py": "adb08fa11708f80dbfddfc903749f6a898c15081adefdfe2f8c14fc6324bbdb3"
+  }
+}

@@ -1,0 +1,91 @@
+[
+  {
+    "tool": "goods_enterprise_products",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "三只松鼠股份有限公司",
+      "productType": "retail",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793069140073943000",
+    "elapsed_seconds": 8.163,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "total",
+      "resultList"
+    ],
+    "row_count": 10,
+    "reported_total": 12654,
+    "numeric_evidence": [
+      {
+        "path": "total",
+        "value": 12654
+      }
+    ],
+    "response_sha256": "17ab439979c1be4e89f71714fca0640d9b65717de5861bb2bb204ce001aa5314"
+  },
+  {
+    "tool": "goods_brand",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "三只松鼠股份有限公司",
+      "view": "brand_detail",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793069140073943000",
+    "elapsed_seconds": 1.89,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "brandsList",
+      "brandsCount"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "brandsList[0].productCount",
+        "value": 9
+      },
+      {
+        "path": "brandsCount",
+        "value": 1
+      }
+    ],
+    "response_sha256": "34ee55460af37ce7eaaf1aa5fb92de7a26c85a0cec3a5c7a1e17581d168a834c"
+  },
+  {
+    "tool": "goods_channel",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "三只松鼠股份有限公司",
+      "source": "domestic_store",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793069140073943000",
+    "elapsed_seconds": 1.53,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 10,
+    "reported_total": 12,
+    "numeric_evidence": [
+      {
+        "path": "total",
+        "value": 12
+      }
+    ],
+    "response_sha256": "a728540530e05633c31edb6be54c00585fc4b027230dcd63d5e1667a32399b6e"
+  }
+]

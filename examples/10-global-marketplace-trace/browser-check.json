@@ -1,0 +1,32 @@
+{
+  "metric_overflows": [],
+  "document_title": "华为技术有限公司 商品大数据报告",
+  "title_matches": true,
+  "charts": 1,
+  "rendered_charts": 1,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 29
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "f108ba9ce84ecb5e93d4d2f9418ee1344d7f7d62cf64fdb4a4e0734f0115e417",
+  "report_json_sha256": "abe66556b185810b4f04333c5059fb3e029a1491458fdf9c821ca17a05a76149",
+  "skill": "goods-skill",
+  "id": "10-global-marketplace-trace",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:03:21.166Z"
+}
