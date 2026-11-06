@@ -95,3 +95,17 @@ python scripts/render_report.py --input output/goods.json --output output/goods.
 ```
 
 返回：JSON 路径、HTML 路径、Markdown 路径，以及企业全称映射与数据口径摘要。
+
+## 内容审校（离线）
+
+对已有 `report.json` 复核而不调用 MCP：`python scripts/goods_content_review.py --input <report.json> --out-dir <dir>`；纯函数 `goods_content_review.apply_content_review(report)`。审校顺序：
+
+1. 搜索命中与商品总量分开：`商品检索结果` 不进业务规模指标；规模用企业商品明细总数。
+2. 渠道平台与链接域名交叉核对；不一致保留原值并标“待核实”，不静默改写；上游未返回可识别平台时，链接推断仅作待核实线索，不计入平台数。
+3. 样本边界：`店铺/渠道数` 是上游总数，`覆盖平台（样本）` 只统计上游平台字段可识别的平台；不推平台份额或数据完整性。
+4. 空列：价格全部为空时隐藏价格列并注明“上游未返回价格”；`commodity` 等来源码转可读名称。
+5. 措辞：删除“选品基础”“多来源说明数据全面”等营销式结论；正文不出现 `keywordType`、`domestic_store`。
+
+交付前按最终 `sections` 与实际 body 刷新 `data_source.quality_report`（`0` 计为已填充；`coverage_pct` 仅为章节填充率）；保留原 `generated_at`。平台域名用 `urlsplit().hostname` 做精确/后缀匹配，不接受 credentials、query 或外来域名中的片段。
+
+CLI 会拒绝 `--out-dir` 的 `report.json` 解析为 `--input` 的调用；输出目标应位于本 skill 的 `output/content-quality-review/`，不得覆盖 `examples/` 或 `test-records/`。

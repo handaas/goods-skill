@@ -33,6 +33,8 @@ from common import REPORT_BANNER, REPORT_TYPE, attach_pagination, call_tool_once
 import mcp_client
 from render_report import render_html, render_markdown, html_to_pdf
 
+from goods_content_review import apply_content_review
+
 SAMPLE_PATH = pathlib.Path(__file__).resolve().parent.parent / "assets" / "report.example.json"
 
 # Goods MCP tools.
@@ -223,7 +225,7 @@ def build_metrics(search_total: Any, profile: Mapping[str, Any], channel_total: 
 def build_caliber(subject: Mapping[str, Any], selectors: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "match_target": subject.get("enterprise") or subject.get("match_raw"),
-        "match_type": f"商品数据按企业主体匹配（keywordType={subject.get('keywordType', 'name')}）；商品明细/品牌/渠道通过当前 MCP 已注册工具查询",
+        "match_type": "商品数据按企业名称匹配；商品明细、品牌与渠道通过当前可用工具查询",
         "data_scope": "企业商品明细、品牌分析、渠道本次采集样本",
         "products": ["企业商品明细", "商品品牌分析", "商品渠道分析"],
         "limit": "渠道为分页样本，不代表企业完整渠道；海外商品需网店 id。品牌结果缺少可核验主体绑定时仅保留为来源线索，不进入指标与肯定性洞察。当前 MCP 未注册历史价格与销售趋势工具，相关选择器仅作缺口披露。",
@@ -635,7 +637,7 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequ
         import sys
         print("⚠️ 质量门禁警告: 所有核心分析维度均无数据", file=sys.stderr)
     title = f"{subject.get('enterprise') or '目标企业'} 商品大数据报告"
-    return {
+    report = {
         "report_type": REPORT_TYPE,
         "title": title,
         "banner": REPORT_BANNER,
@@ -664,6 +666,7 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequ
             "quality_report": quality_report,
         },
     }
+    return apply_content_review(report)
 
 
 def _selected_products(selectors: Mapping[str, Any]) -> List[Dict[str, str]]:

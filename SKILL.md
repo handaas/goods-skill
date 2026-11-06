@@ -78,6 +78,8 @@ description: Use for generating a professional goods big-data report (商品大�
 5. **渲染三件套**：`compose_report.py --enterprise ... --output ... --report-output ...` 直接产出 JSON + HTML + Markdown；或 `render_report.py --input ... --output ...` 重渲染。
 6. **返回路径**：返回 JSON、HTML、Markdown 文件路径，以及企业全称映射与数据口径（含所选数据源）。
 
+- **渲染前置检查**：执行会产出含图表 HTML / PDF 的报告命令前，先验证 `node --version` 与本 skill 自带 `assets/vendor/echarts.min.js` 存在；内嵌静态 SVG 的生成需要 Node.js（推荐当前 LTS，无需 npm 包），缺失时报告生成明确报错。查看已生成的 HTML 与 Markdown 输出不需要 Node。
+
 ## 脚本速查
 
 ```bash
@@ -146,5 +148,18 @@ python scripts/render_report.py --input output/goods.json --output output/goods.
 - `representative_records`：代表性商品/店铺记录（名称 / 价格 / 销量 / 平台）。
 - `insights`：结构化解读；未验证主体关系的品牌线索不得进入品牌矩阵洞察。
 - `data_source`：MCP server、所选数据产品（随选择器动态变化）、生成时间、是否 dry-run，以及 `pagination`、`call_usage`。
+
+## 内容整理与交付审校
+
+生成后按“原始值 → 规范标签 → 证据位置”逐项整理，保留原始值供核对。`subject.keywordType`、`subject.matchKeyword` 等机器字段保留在 JSON 供系统集成，只从 caliber / 正文可见文本中移除内部代码：
+
+1. **商品检索命中 ≠ 商品总量**：`商品检索结果 1` 只是关键词搜索反馈，不能当“商品规模”；规模用企业商品明细总数，并标明“明细产品总量，不等同于在售 SKU 或销量”。
+2. **渠道平台核验**：平台字段必须与店铺链接域名交叉核对。`taobao.com` 被标为“天猫”时保留原值并标“待核实”，不静默改写；`cn.made-in-china`、`tradekey` 等站点名转为可读平台名，无法识别则保留原值。
+3. **样本 ≠ 全量**：`店铺/渠道数` 是上游总数，`覆盖平台` 是当前渠道样本内平台数；渠道结论必须写“当前样本 N 家（上游总数 M 家）”，不能推平台份额、渠道集中度或“数据完整”。
+4. **空列与来源**：所有价格均为 `-` 时隐藏价格列并注明“上游未返回价格”；`commodity` 等来源码转为“商品明细”，原始码保留在 JSON。
+5. **不写营销结论**：不用“商品规模反映覆盖广度，是选品基础”“多来源说明数据全面”等无证据话术；样本来源数不证明铺货完整性，单一平台也不自动构成风险。
+6. **交付前自检**：正文不出现 `keywordType`、`domestic_store` 等内部参数/数据源代码；同义解读不重复进入执行摘要。
+
+离线复核已有 JSON（不调用 MCP）：`python scripts/goods_content_review.py --input <report.json> --out-dir <dir>`；纯函数为 `goods_content_review.apply_content_review(report)`。
 
 若 API 调用失败，明确报出缺失的配置 / 缺失的工具 / MCP 错误 / 参数校验错误 / 上游网络错误，给出 dry-run 命令或配置步骤，绝不暴露密钥。
